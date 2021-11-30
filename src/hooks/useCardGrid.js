@@ -8,8 +8,12 @@ import {
   updateCards,
   initGame,
   setWait,
+  setWin,
+  increaseMatchedCount,
+  decreaseMatchedCount,
+  restartGame,
 } from 'context/card/index';
-import { isEven } from 'utils/index';
+import { isEven, square } from 'utils/index';
 
 // const { } = CardGridService;
 
@@ -43,6 +47,19 @@ export const useCardGrid = () => {
   });
 
   useEffect(() => {
+    if (state.matchCount === square(state.gameLevel.arraySize) / 2) {
+      dispatch(setWin(true));
+    }
+  }, [state.matchCount]);
+
+  useEffect(() => {
+    if (state.isWinning) {
+      alert('You win the game');
+      // dispatch(restartGame());
+    }
+  }, [state.isWinning]);
+
+  useEffect(() => {
     if (isEven(state.moveCount)) {
       const unmatchedPieces = findUnmatchedPieces();
       if (
@@ -56,6 +73,7 @@ export const useCardGrid = () => {
         state.cardArr[index0] = unmatchedPieces[0];
         state.cardArr[index1] = unmatchedPieces[1];
         dispatch(updateCards(state.cardArr));
+        dispatch(increaseMatchedCount());
       }
       if (state.isWaiting) dispatch(setWait(false));
     }

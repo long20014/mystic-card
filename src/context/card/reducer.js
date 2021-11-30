@@ -33,6 +33,26 @@ const cardReducer = (state, action) => {
         moveCount: state.moveCount + 1,
       };
     }
+    case type.INCREASE_MATCHED_COUNT: {
+      return {
+        ...state,
+        matchCount: state.matchCount + 1,
+      };
+    }
+    case type.DECREASE_MATCHED_COUNT: {
+      return {
+        ...state,
+        matchCount: state.matchCount > 0 ? state.matchCount - 1 : 0,
+      };
+    }
+    case type.RESTART_GAME: {
+      return {
+        ...state,
+        matchCount: 0,
+        moveCount: 0,
+        isWin: false,
+      };
+    }
     default:
       throw new Error('invalid action');
   }

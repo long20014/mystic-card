@@ -18,6 +18,7 @@ export const CardStateProvider = ({ children }) => {
     gridSlots: null,
     isInit: false,
     moveCount: 0,
+    matchCount: 0,
     isWinning: false,
     isWaiting: false,
     gameLevel: {

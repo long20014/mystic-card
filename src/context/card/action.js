@@ -15,6 +15,24 @@ export const increaseMoveCount = () => {
   };
 };
 
+export const restartGame = () => {
+  return {
+    type: type.RESTART_GAME,
+  };
+};
+
+export const increaseMatchedCount = () => {
+  return {
+    type: type.INCREASE_MATCHED_COUNT,
+  };
+};
+
+export const decreaseMatchedCount = () => {
+  return {
+    type: type.DECREASE_MATCHED_COUNT,
+  };
+};
+
 export const setGridSlots = (gridSlots) => {
   return {
     type: type.SET_GRID_SLOTS,
