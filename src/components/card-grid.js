@@ -2,18 +2,15 @@ import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { useCardGrid } from 'hooks/useCardGrid';
 
-const gridStyle = { 
-  border: '1px solid wheat',  
+const gridStyle = {
+  border: '1px solid wheat',
 };
 
 export default function CardGrid() {
-  const {
-    renderGridSlots,
-    getCardArr   
-  } = useCardGrid();
+  const { renderGridSlots, getCardArr } = useCardGrid();
 
   const gridSlots = renderGridSlots(getCardArr());
-  
+
   return (
     <>
       <FlatList
@@ -36,6 +33,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     padding: 5,
-    border: '1px solid wheat',  
-  }
+    border: '1px solid wheat',
+  },
 });

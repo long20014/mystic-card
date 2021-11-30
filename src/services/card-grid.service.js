@@ -3,14 +3,6 @@ import GridService from 'services/grid.service';
 
 const gridService = GridService();
 
-const CardGridService = () => {
-  return {
-    getRandomPieceName,
-    shiftUnMatchedItemsOfArray,
-    initCardArray,
-  };
-};
-
 const getRandomPieceName = (pieceNames) => {
   const splicePos = Math.floor((Math.random() * 100) % pieceNames.length);
   const pieceId = pieceNames.splice(splicePos, 1);
@@ -73,10 +65,30 @@ const initCardArray = () => {
       id: pieceId,
       name: name,
       matched: false,
-      state: 'down',
+      status: 'down',
     });
   }
   return cardArr;
+};
+
+const flipCard = (piece, state, updateCards, dispatch) => {
+  let status = 'down';
+  const index = getCardIndex(state, piece);
+  if (piece.status === 'down') status = 'up';
+  const newPiece = { ...piece, status: status };
+  state.cardArr[index] = newPiece;
+  dispatch(updateCards(state.cardArr));
+};
+
+const getCardIndex = (state, piece) =>
+  state.cardArr.map((item) => item.id).indexOf(piece.id);
+
+const CardGridService = {
+  getRandomPieceName,
+  shiftUnMatchedItemsOfArray,
+  initCardArray,
+  flipCard,
+  getCardIndex,
 };
 
 export default CardGridService;

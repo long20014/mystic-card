@@ -1,19 +1,52 @@
 import { type } from './type';
 
-export const flipUp = (dispatch, cardArr) =>
-  dispatch({
-    type: type.FLIP_UP,
-    payload: cardArr,
-  });
+export const updateCards = (cardArr) => {
+  return {
+    type: type.UPDATE_CARDS,
+    payload: {
+      cardArr,
+    },
+  };
+};
 
-export const setGridSlots = (dispatch, gridSlots) =>
-  dispatch({
+export const increaseMoveCount = () => {
+  return {
+    type: type.INCREASE_MOVE_COUNT,
+  };
+};
+
+export const setGridSlots = (gridSlots) => {
+  return {
     type: type.SET_GRID_SLOTS,
-    payload: gridSlots,
-  });
+    payload: {
+      gridSlots,
+    },
+  };
+};
 
-export const initGame = (dispatch, isInit) =>
-  dispatch({
+export const initGame = (isInit) => {
+  return {
     type: type.INIT_GAME,
-    payload: isInit,
-  });
+    payload: {
+      isInit,
+    },
+  };
+};
+
+export const setWin = (isWinning) => {
+  return {
+    type: type.SET_WIN,
+    payload: {
+      isWinning,
+    },
+  };
+};
+
+export const setWait = (isWaiting) => {
+  return {
+    type: type.SET_WAIT,
+    payload: {
+      isWaiting,
+    },
+  };
+};

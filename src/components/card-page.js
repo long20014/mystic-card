@@ -9,7 +9,7 @@ export default function CardPage() {
       <View style={styles.container}>
         <CardGrid CardGrid></CardGrid>
       </View>
-    </CardStateProvider>    
+    </CardStateProvider>
   );
 }
 

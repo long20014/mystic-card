@@ -1,78 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
 import { useCardPiece } from 'hooks/useCardPiece';
 
-export default function CardPiece({id, piece}) {
-  const {
-    flipCardUp,
-  } = useCardPiece(piece);
-  
+export default function CardPiece({ id, piece }) {
+  const { flipCardUp, frontAnimatedStyle, backAnimatedStyle } =
+    useCardPiece(piece);
 
   const createCardFrontStyles = () => {
-    return [styles.cardPiece, styles.cardFront];
+    return [styles.cardPiece, styles.cardFront, frontAnimatedStyle];
   };
 
   const createCardBackStyles = () => {
-    return [styles.cardPiece, styles.cardBack];
+    return [styles.cardPiece, styles.cardBack, backAnimatedStyle];
   };
 
-  const isCardDown = () => {
-    return piece['state'] === 'down';
-  };
-
-  const isCardUp = () => {
-    return piece['state'] === 'up';
-  };
-
-  const renderCardDownSide = () => {
+  const renderCard = () => {
     return (
-      <View 
-        style={[
-          styles.componentWrapper, 
-          styles.cardWrapper, 
-          styles.hFull, 
-          styles.unmatched
-        ]}
-        name={name} 
-        id={`piece-${id}`} 
-        onClick={(e) => flipCardUp(e)}
-      >
-        <View id={`piece-${id}-front`} style={createCardFrontStyles()}>
-          <Text h1>{name}</Text>
+      <TouchableOpacity onPress={flipCardUp}>
+        <View
+          style={[
+            styles.componentWrapper,
+            styles.cardWrapper,
+            styles.hFull,
+            styles.unmatched,
+          ]}
+          name={piece.name}
+          id={`piece-${id}`}
+        >
+          <Animated.View
+            id={`piece-${id}-back`}
+            style={createCardBackStyles()}
+          ></Animated.View>
+          <Animated.View
+            id={`piece-${id}-front`}
+            style={createCardFrontStyles()}
+          >
+            <Text h1>{piece.name}</Text>
+          </Animated.View>
         </View>
-        <View id={`piece-${id}-back`} style={createCardBackStyles()}></View>
-      </View>      
+      </TouchableOpacity>
     );
   };
 
-  const renderCardUpSide = () => {
-    return (
-      <View 
-        style={[
-          styles.componentWrapper, 
-          styles.cardWrapper, 
-          styles.hFull, 
-          styles.unmatched,
-          styles.flipUp,
-        ]}
-        name={name} 
-        id={`piece-${id}`} 
-        onClick={(e) => flipCardUp(e)}
-      >
-        <View id={`piece-${id}-front`} style={createCardFrontStyles()}>
-          <Text h1>{name}</Text>
-        </View>
-        <View id={`piece-${id}-back`} style={createCardBackStyles()}></View>
-      </View>      
-    );
-  };
-
-  return (
-    <>
-      {isCardDown() && renderCardDownSide()} 
-      {isCardUp() && renderCardUpSide()}
-    </>
-  );
+  return <>{renderCard()}</>;
 }
 
 const styles = StyleSheet.create({
@@ -81,6 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#000',
   },
   cardPiece: {
     width: 60,
@@ -89,7 +66,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    transition: 'all 0.3s ease', 
+    transition: 'all 0.3s ease',
   },
   h1: {
     margin: '0',
@@ -98,7 +75,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backfaceVisibility: 'hidden',
     overflow: 'hidden',
-    transform: 'rotateY(180deg)',
   },
   cardBack: {
     position: 'absolute',
@@ -108,6 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'cyan',
   },
   flipUp: {
-    transform: 'rotateY(180deg)'		
-  }
+    transform: '0deg',
+  },
 });
