@@ -1,22 +1,20 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import CardGrid from './card-grid';
-import { CardStateProvider } from 'context/card/index';
+import { useCardPage } from 'hooks/useCardPage';
 
 export default function CardPage() {
+  // const { } = useCardPage();
   return (
-    <CardStateProvider>
-      <View style={styles.container}>
-        <CardGrid CardGrid></CardGrid>
-      </View>
-    </CardStateProvider>
+    <View style={[styles.container]}>
+      <CardGrid CardGrid></CardGrid>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#c3c3c3',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -50,7 +50,7 @@ const cardReducer = (state, action) => {
         ...state,
         matchCount: 0,
         moveCount: 0,
-        isWin: false,
+        isWinning: false,
       };
     }
     default:

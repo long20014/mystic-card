@@ -18,12 +18,25 @@ import { isEven, square } from 'utils/index';
 // const { } = CardGridService;
 
 export const useCardGrid = () => {
-  // const [grid, setGrid] = useState({});
   const { state, dispatch } = useCardContext();
   const [flipDown, setFlipDown] = useState(false);
 
+  const [showRestartButton, setShowRestartButton] = useState(false);
+
+  const handleRestartGame = () => {
+    dispatch(restartGame());
+  };
+
+  const testWinGame = () => {
+    dispatch(setWin(true));
+  };
+
   const getCardArr = () => {
     return state.cardArr;
+  };
+
+  const getMoveCount = () => {
+    return state.moveCount;
   };
 
   const findUnmatchedPieces = () => {
@@ -41,8 +54,8 @@ export const useCardGrid = () => {
 
   useEffect(() => {
     if (state.isInit) {
-      console.log('rerender card grid');
-      console.log(state.cardArr);
+      console.log('rerender card grid 1');
+      // console.log(state.cardArr);
     }
   });
 
@@ -55,8 +68,8 @@ export const useCardGrid = () => {
   useEffect(() => {
     if (state.isWinning) {
       alert('You win the game');
-      // dispatch(restartGame());
     }
+    setShowRestartButton(state.isWinning);
   }, [state.isWinning]);
 
   useEffect(() => {
@@ -92,8 +105,17 @@ export const useCardGrid = () => {
     return slots;
   };
 
+  const renderGridSlot = (cardPiece) => {
+    return <CardGridSlot id={cardPiece.id} piece={cardPiece} />;
+  };
+
   return {
     getCardArr,
+    getMoveCount,
     renderGridSlots,
+    renderGridSlot,
+    testWinGame,
+    handleRestartGame,
+    showRestartButton,
   };
 };

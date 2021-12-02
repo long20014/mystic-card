@@ -1,7 +1,5 @@
 import constants from 'utils/constants';
-import GridService from 'services/grid.service';
-
-const gridService = GridService();
+import { GridService } from 'services/grid.service';
 
 const getRandomPieceName = (pieceNames) => {
   const splicePos = Math.floor((Math.random() * 100) % pieceNames.length);
@@ -39,7 +37,7 @@ const initCardArray = () => {
   const cardArr = [];
   const gridSize =
     constants.GRID_SIZE_LV2.height * constants.GRID_SIZE_LV2.width;
-  const pieceIdSet = gridService.getPieceIdSet(gridSize);
+  const pieceIdSet = GridService.getPieceIdSet(gridSize);
   const pieceNames = [
     'A',
     'A',
@@ -60,7 +58,7 @@ const initCardArray = () => {
   ];
   for (let i = 0; i < gridSize; i++) {
     const name = getRandomPieceName(pieceNames);
-    let pieceId = gridService.getRandomPieceId(pieceIdSet);
+    let pieceId = GridService.getRandomPieceId(pieceIdSet);
     cardArr.push({
       id: pieceId,
       name: name,

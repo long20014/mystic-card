@@ -1,9 +1,6 @@
 import React from 'react';
-import CardPage from './src/components/card-page';
+import CardAppShell from './src/components/card-app-shell';
 
 export default function App() {
-  return (
-    <CardPage></CardPage>
-  );
+  return <CardAppShell />;
 }
-

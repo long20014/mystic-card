@@ -1,31 +1,44 @@
 import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
 import { useCardGrid } from 'hooks/useCardGrid';
 
-const gridStyle = {
-  border: '1px solid wheat',
-};
-
 export default function CardGrid() {
-  const { renderGridSlots, getCardArr } = useCardGrid();
-
-  const gridSlots = renderGridSlots(getCardArr());
+  const {
+    testWinGame,
+    handleRestartGame,
+    showRestartButton,
+    renderGridSlot,
+    getCardArr,
+    getMoveCount,
+  } = useCardGrid();
+  const hiddenStyle = showRestartButton ? '' : styles.hidden;
+  const cardArr = getCardArr();
+  const moveCount = { count: getMoveCount() }; // this is used for flatlist re-render working
 
   return (
     <>
       <FlatList
         contentContainerStyle={styles.grid}
         numColumns={4}
-        data={gridSlots}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => item}
+        data={cardArr}
+        extraData={moveCount}
+        keyExtractor={(item, index) => 'slot-' + index.toString()}
+        renderItem={({ item }) => renderGridSlot(item)}
       />
+      <TouchableOpacity
+        style={[hiddenStyle, styles.buttonStyle]}
+        onPress={handleRestartGame}
+      >
+        <Text style={[styles.textStyle]}>Restart Game</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.buttonStyle]} onPress={testWinGame}>
+        <Text style={[styles.textStyle]}>Win Game</Text>
+      </TouchableOpacity>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  gridStyle,
   grid: {
     marginBottom: 32,
     marginTop: 16,
@@ -33,6 +46,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     padding: 5,
-    border: '1px solid wheat',
+  },
+  hidden: {
+    display: 'none',
+  },
+  buttonStyle: {
+    marginBottom: 16,
+    width: 130,
+    backgroundColor: '#841584',
+    alignItems: 'center',
+    padding: 10,
+  },
+  textStyle: {
+    color: 'white',
   },
 });

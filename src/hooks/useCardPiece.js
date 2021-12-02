@@ -44,10 +44,12 @@ export const useCardPiece = (piece) => {
       toValue: value,
       duration: duration,
       delay: delay,
+      useNativeDriver: true,
     }).start(() => callback());
   };
 
   const flipCardUp = (e) => {
+    console.log('flip up');
     if (piece.status === 'down' && !state.isWaiting) {
       startFlipAnimation(180, 500, 0, () => {
         flipCard(piece, state, updateCards, dispatch);
