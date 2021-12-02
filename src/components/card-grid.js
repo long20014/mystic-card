@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
+} from 'react-native';
 import { useCardGrid } from 'hooks/useCardGrid';
 
 export default function CardGrid() {
@@ -16,7 +22,7 @@ export default function CardGrid() {
   const moveCount = { count: getMoveCount() }; // this is used for flatlist re-render working
 
   return (
-    <>
+    <SafeAreaView style={[styles.container]}>
       <FlatList
         contentContainerStyle={styles.grid}
         numColumns={4}
@@ -34,7 +40,7 @@ export default function CardGrid() {
       <TouchableOpacity style={[styles.buttonStyle]} onPress={testWinGame}>
         <Text style={[styles.textStyle]}>Win Game</Text>
       </TouchableOpacity>
-    </>
+    </SafeAreaView>
   );
 }
 
@@ -59,5 +65,11 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: 'white',
+  },
+  container: {
+    backgroundColor: '#c3c3c3',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // height: 450,
   },
 });

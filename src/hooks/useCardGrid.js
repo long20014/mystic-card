@@ -19,7 +19,6 @@ import { isEven, square } from 'utils/index';
 
 export const useCardGrid = () => {
   const { state, dispatch } = useCardContext();
-  const [flipDown, setFlipDown] = useState(false);
 
   const [showRestartButton, setShowRestartButton] = useState(false);
 
@@ -54,7 +53,7 @@ export const useCardGrid = () => {
 
   useEffect(() => {
     if (state.isInit) {
-      console.log('rerender card grid 1');
+      console.log('rerender card grid');
       // console.log(state.cardArr);
     }
   });

@@ -9,11 +9,7 @@ export default function CardGridSlot({ id, piece }) {
     }
   };
 
-  return (
-    <View id={`slot-${id}`} style={styles.cardGridSlot}>
-      {createCardPiece()}
-    </View>
-  );
+  return createCardPiece();
 }
 
 const styles = StyleSheet.create({

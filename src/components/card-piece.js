@@ -5,7 +5,6 @@ import {
   View,
   Animated,
   TouchableOpacity,
-  TouchableNativeFeedback,
 } from 'react-native';
 import { useCardPiece } from 'hooks/useCardPiece';
 
@@ -26,12 +25,7 @@ export default function CardPiece({ id, piece }) {
       <>
         <TouchableOpacity onPress={flipCardUp}>
           <View
-            style={[
-              styles.componentWrapper,
-              styles.cardWrapper,
-              styles.hFull,
-              styles.unmatched,
-            ]}
+            style={[styles.cardWrapper, styles.hFull, styles.unmatched]}
             name={piece.name}
             id={`piece-${id}`}
           >
@@ -55,12 +49,14 @@ export default function CardPiece({ id, piece }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  cardWrapper: {
+    position: 'relative',
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#000',
+    width: 60,
+    height: 60,
+    margin: 5,
   },
   cardPiece: {
     width: 60,
@@ -77,6 +73,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backfaceVisibility: 'hidden',
     overflow: 'hidden',
+    backgroundColor: 'white',
   },
   cardBack: {
     position: 'absolute',

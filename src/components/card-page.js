@@ -1,14 +1,14 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import CardGrid from './card-grid';
 import { useCardPage } from 'hooks/useCardPage';
 
 export default function CardPage() {
   // const { } = useCardPage();
   return (
-    <View style={[styles.container]}>
+    <SafeAreaView>
       <CardGrid CardGrid></CardGrid>
-    </View>
+    </SafeAreaView>
   );
 }
 
