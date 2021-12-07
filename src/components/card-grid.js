@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#c3c3c3',
     alignItems: 'center',
     justifyContent: 'center',
-    // height: 450,
+    marginTop: 25,
   },
 });

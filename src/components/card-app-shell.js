@@ -1,23 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import { CardStateProvider } from 'context/card/index';
-import CardPage from './card-page';
+import MainRouter from 'routers/main-router';
 
 export default function CardAppShell() {
   return (
     <CardStateProvider>
-      <View style={styles.container}>
-        <CardPage />
-      </View>
+      <MainRouter />
     </CardStateProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-  },
-});
