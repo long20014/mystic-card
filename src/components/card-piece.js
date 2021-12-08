@@ -9,7 +9,7 @@ import {
 import { useCardPiece } from 'hooks/useCardPiece';
 
 export default function CardPiece({ id, piece }) {
-  const { flipCardUp, frontAnimatedStyle, backAnimatedStyle } =
+  const { flipCardUp, frontAnimatedStyle, backAnimatedStyle, state } =
     useCardPiece(piece);
 
   const createCardFrontStyles = () => {
@@ -23,7 +23,7 @@ export default function CardPiece({ id, piece }) {
   const Card = () => {
     return (
       <>
-        <TouchableOpacity onPress={flipCardUp}>
+        <TouchableOpacity onPress={flipCardUp} disabled={state.isWaiting}>
           <View
             style={[styles.cardWrapper, styles.hFull, styles.unmatched]}
             name={piece.name}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 import CardGridService from 'services/card-grid.service';
-import constants from 'utils/constants';
 import CardGridSlot from 'components/card-grid-slot';
 import {
   useCardContext,
@@ -12,10 +11,14 @@ import {
   increaseMatchedCount,
   decreaseMatchedCount,
   restartGame,
+  setGoShift,
 } from 'context/card/index';
 import { isEven, square } from 'utils/index';
+import constants from 'utils/constants';
 
-// const { } = CardGridService;
+const { LEFT, RIGHT, HARD, COMMON_TIMING } = constants;
+
+const { shiftUnMatchedItemsOfArray } = CardGridService;
 
 export const useCardGrid = () => {
   const { state, dispatch } = useCardContext();
@@ -47,13 +50,13 @@ export const useCardGrid = () => {
   useEffect(() => {
     if (!state.isInit) {
       dispatch(initGame(true));
-      console.log('card-grid');
+      // console.log('card-grid');
     }
   }, [state.isInit]);
 
   useEffect(() => {
     if (state.isInit) {
-      console.log('rerender card grid');
+      // console.log('rerender card grid');
       // console.log(state.cardArr);
     }
   });
@@ -87,9 +90,18 @@ export const useCardGrid = () => {
         dispatch(updateCards(state.cardArr));
         dispatch(increaseMatchedCount());
       }
-      if (state.isWaiting) dispatch(setWait(false));
     }
   }, [state.moveCount]);
+
+  useEffect(() => {
+    if (state.gameLevel.level === HARD && state.goShift) {
+      setTimeout(() => {
+        const shiftedArray = shiftUnMatchedItemsOfArray(state.cardArr, 2, LEFT);
+        dispatch(updateCards(shiftedArray));
+        if (state.isWaiting) dispatch(setWait(false));
+      }, COMMON_TIMING);
+    }
+  }, [state.goShift]);
 
   const renderGridSlots = (cardArr) => {
     const slots = [];

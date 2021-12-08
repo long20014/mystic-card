@@ -3,7 +3,9 @@ import { CardContext } from './context';
 import CardReducer from './reducer';
 import CardGridService from 'services/card-grid.service';
 import { getRandomInt } from 'utils/index';
+import constants from 'utils/constants';
 
+const { NORMAL, HARD, NIGHTMARE } = constants;
 const { initCardArray } = CardGridService;
 
 export const useCardContext = () => {
@@ -17,12 +19,13 @@ export const CardStateProvider = ({ children }) => {
     cardArr: initCardArray(),
     gridSlots: null,
     isInit: false,
+    goShift: false,
     moveCount: 0,
     matchCount: 0,
     isWinning: false,
     isWaiting: false,
     gameLevel: {
-      level: 'Hard',
+      level: HARD,
       arraySize: 4,
       shiftCase: getRandomInt(2),
     },

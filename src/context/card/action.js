@@ -68,3 +68,21 @@ export const setWait = (isWaiting) => {
     },
   };
 };
+
+export const setGameLevel = (level) => {
+  return {
+    type: type.SET_GAME_LEVEL,
+    payload: {
+      level,
+    },
+  };
+};
+
+export const setGoShift = (goShift) => {
+  return {
+    type: type.SET_GO_SHIFT,
+    payload: {
+      goShift,
+    },
+  };
+};

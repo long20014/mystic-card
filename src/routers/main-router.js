@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import CardGrid from 'components/card-grid';
 import CardMenu from 'components/card-menu';
+import CardSetting from 'components/card-setting';
+import CardScoreBoard from 'components/card-score-board';
 
 const MainStack = createNativeStackNavigator();
 
@@ -18,11 +20,11 @@ const menuRoutes = [
   },
   {
     label: 'ScoreBoard',
-    component: CardGrid,
+    component: CardScoreBoard,
   },
   {
     label: 'Setting',
-    component: CardGrid,
+    component: CardSetting,
   },
 ];
 

@@ -13,7 +13,7 @@ const menu = [
   },
   {
     label: 'Setting',
-    component: 'CardGrid',
+    component: 'Setting',
   },
 ];
 

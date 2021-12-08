@@ -1,6 +1,8 @@
 import constants from 'utils/constants';
 import { GridService } from 'services/grid.service';
 
+const { LEFT, RIGHT, UP, DOWN } = constants;
+
 const getRandomPieceName = (pieceNames) => {
   const splicePos = Math.floor((Math.random() * 100) % pieceNames.length);
   const pieceId = pieceNames.splice(splicePos, 1);
@@ -19,7 +21,7 @@ const shiftUnMatchedItemsOfArray = (arr, steps, direction) => {
   let newArr = JSON.parse(JSON.stringify(arr));
   let unmatchedItems = arr.filter((item) => !item.matched);
   let count = 0;
-  if (direction === 'left') {
+  if (direction === LEFT) {
     unmatchedItems = shiftArrayToLeft(unmatchedItems, steps);
   } else {
     unmatchedItems = shiftArrayToRight(unmatchedItems, steps);
@@ -63,16 +65,16 @@ const initCardArray = () => {
       id: pieceId,
       name: name,
       matched: false,
-      status: 'down',
+      status: DOWN,
     });
   }
   return cardArr;
 };
 
 const flipCard = (piece, state, updateCards, dispatch) => {
-  let status = 'down';
+  let status = DOWN;
   const index = getCardIndex(state, piece);
-  if (piece.status === 'down') status = 'up';
+  if (piece.status === DOWN) status = UP;
   const newPiece = { ...piece, status: status };
   state.cardArr[index] = newPiece;
   dispatch(updateCards(state.cardArr));

@@ -53,6 +53,18 @@ const cardReducer = (state, action) => {
         isWinning: false,
       };
     }
+    case type.SET_GAME_LEVEL: {
+      return {
+        ...state,
+        gameLevel: { ...state.gameLevel, level: action.payload.level },
+      };
+    }
+    case type.SET_GO_SHIFT: {
+      return {
+        ...state,
+        goShift: action.payload.goShift,
+      };
+    }
     default:
       throw new Error('invalid action');
   }
