@@ -1,4 +1,7 @@
 import { type } from './type';
+import CardGridService from 'services/card-grid.service';
+
+const { initCardArray } = CardGridService;
 
 const cardReducer = (state, action) => {
   switch (action.type) {
@@ -6,11 +9,6 @@ const cardReducer = (state, action) => {
       return {
         ...state,
         cardArr: action.payload.cardArr,
-      };
-    case type.SET_GRID_SLOTS:
-      return {
-        ...state,
-        gridSlots: action.payload.gridSlots,
       };
     case type.INIT_GAME:
       return {
@@ -48,6 +46,7 @@ const cardReducer = (state, action) => {
     case type.RESTART_GAME: {
       return {
         ...state,
+        cardArr: initCardArray(),
         matchCount: 0,
         moveCount: 0,
         isWinning: false,

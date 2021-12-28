@@ -17,7 +17,6 @@ export const useCardContext = () => {
 export const CardStateProvider = ({ children }) => {
   const initialState = {
     cardArr: initCardArray(),
-    gridSlots: null,
     isInit: false,
     goShift: false,
     moveCount: 0,

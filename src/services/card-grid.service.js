@@ -83,12 +83,46 @@ const flipCard = (piece, state, updateCards, dispatch) => {
 const getCardIndex = (state, piece) =>
   state.cardArr.map((item) => item.id).indexOf(piece.id);
 
+const level1 = () => {};
+
+const level2 = () => {};
+
+const level3 = () => {};
+
+const level4 = () => {};
+
+const level5 = () => {};
+
+const level6 = () => {};
+
+const level7 = () => {};
+
+const level8 = () => {};
+
+const level9 = () => {};
+
+const level10 = () => {};
+
+const swapMechanic = {
+  level1,
+  level2,
+  level3,
+  level4,
+  level5,
+  level6,
+  level7,
+  level8,
+  level9,
+  level10,
+};
+
 const CardGridService = {
   getRandomPieceName,
   shiftUnMatchedItemsOfArray,
   initCardArray,
   flipCard,
   getCardIndex,
+  swapMechanic,
 };
 
 export default CardGridService;

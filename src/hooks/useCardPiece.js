@@ -53,12 +53,11 @@ export const useCardPiece = (piece) => {
   };
 
   const flipCardUp = (e) => {
-    if (piece.status === 'down') {
-      console.log('flip up');
+    console.log('flip up');
+    if (piece.status === 'down' && !state.isWaiting) {
       startFlipAnimation(180, COMMON_TIMING, 0, () => {
         flipCard(piece, state, updateCards, dispatch);
         dispatch(increaseMoveCount());
-        console.log(state.moveCount);
       });
       if (isEven(state.moveCount + 1) && !state.isWaiting) {
         dispatch(setWait(true));

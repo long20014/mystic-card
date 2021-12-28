@@ -16,7 +16,7 @@ import {
 import { isEven, square } from 'utils/index';
 import constants from 'utils/constants';
 
-const { LEFT, RIGHT, HARD, COMMON_TIMING } = constants;
+const { LEFT, NORMAL, HARD, COMMON_TIMING } = constants;
 
 const { shiftUnMatchedItemsOfArray } = CardGridService;
 
@@ -90,6 +90,8 @@ export const useCardGrid = () => {
         dispatch(updateCards(state.cardArr));
         dispatch(increaseMatchedCount());
       }
+      if (state.gameLevel.level === NORMAL && state.isWaiting)
+        dispatch(setWait(false));
     }
   }, [state.moveCount]);
 
@@ -99,7 +101,7 @@ export const useCardGrid = () => {
         const shiftedArray = shiftUnMatchedItemsOfArray(state.cardArr, 2, LEFT);
         dispatch(updateCards(shiftedArray));
         if (state.isWaiting) dispatch(setWait(false));
-      }, COMMON_TIMING);
+      }, COMMON_TIMING + 100);
     }
   }, [state.goShift]);
 

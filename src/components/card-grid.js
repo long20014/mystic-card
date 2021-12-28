@@ -23,6 +23,9 @@ export default function CardGrid() {
 
   return (
     <SafeAreaView style={[styles.container]}>
+      <TouchableOpacity style={[styles.moveCount]}>
+        <Text style={[styles.textStyle]}>{moveCount.count}</Text>
+      </TouchableOpacity>
       <FlatList
         contentContainerStyle={styles.grid}
         numColumns={4}
@@ -65,6 +68,14 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: 'white',
+  },
+  moveCount: {
+    marginBottom: 16,
+    marginTop: 16,
+    width: 130,
+    backgroundColor: '#841584',
+    alignItems: 'center',
+    padding: 10,
   },
   container: {
     backgroundColor: '#c3c3c3',

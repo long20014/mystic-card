@@ -33,15 +33,6 @@ export const decreaseMatchedCount = () => {
   };
 };
 
-export const setGridSlots = (gridSlots) => {
-  return {
-    type: type.SET_GRID_SLOTS,
-    payload: {
-      gridSlots,
-    },
-  };
-};
-
 export const initGame = (isInit) => {
   return {
     type: type.INIT_GAME,
