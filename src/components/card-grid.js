@@ -16,15 +16,19 @@ export default function CardGrid() {
     renderGridSlot,
     getCardArr,
     getMoveCount,
+    getMatchCount,
   } = useCardGrid();
   const hiddenStyle = showRestartButton ? '' : styles.hidden;
   const cardArr = getCardArr();
   const moveCount = { count: getMoveCount() }; // this is used for flatlist re-render working
-
+  const matchCount = getMatchCount();
   return (
     <SafeAreaView style={[styles.container]}>
       <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{moveCount.count}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.moveCount]}>
+        <Text style={[styles.textStyle]}>{matchCount}</Text>
       </TouchableOpacity>
       <FlatList
         contentContainerStyle={styles.grid}

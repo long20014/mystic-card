@@ -20,7 +20,7 @@ const constants = {
   HARD: 'Hard',
   NIGHTMARE: 'Nightmare',
   LEFT: 'left',
-  RIGHt: 'right',
+  RIGHT: 'right',
   UP: 'up',
   DOWN: 'down',
   COMMON_TIMING: 400,

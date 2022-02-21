@@ -1,12 +1,11 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useMemo } from 'react';
 import { CardContext } from './context';
 import CardReducer from './reducer';
 import CardGridService from 'services/card-grid.service';
-import { getRandomInt } from 'utils/index';
 import constants from 'utils/constants';
+import { level } from 'data/levels';
 
-const { NORMAL, HARD, NIGHTMARE } = constants;
-const { initCardArray } = CardGridService;
+const { initCardArray, getDirection } = CardGridService;
 
 export const useCardContext = () => {
   const { state, dispatch } = useContext(CardContext);
@@ -15,8 +14,12 @@ export const useCardContext = () => {
 };
 
 export const CardStateProvider = ({ children }) => {
+  const cardArr = useMemo(() => initCardArray(), []);
+  const direction = useMemo(() => getDirection(), []);
+  // const currentLevel = localStorage.getItem('gameLevels') || level[2];
+  const currentLevel = level[2];
   const initialState = {
-    cardArr: initCardArray(),
+    cardArr: cardArr,
     isInit: false,
     goShift: false,
     moveCount: 0,
@@ -24,9 +27,13 @@ export const CardStateProvider = ({ children }) => {
     isWinning: false,
     isWaiting: false,
     gameLevel: {
-      level: HARD,
-      arraySize: 4,
-      shiftCase: getRandomInt(2),
+      currentStage: currentLevel.stages[0],
+      swapMechanic: { swap: currentLevel.swapMechanic },
+      after2FlipsHandler: { handle: currentLevel.after2FlipsHandler },
+      shiftSignalController: {
+        sendShiftSignal: currentLevel.shiftSignalController,
+      },
+      direction: direction,
     },
   };
 

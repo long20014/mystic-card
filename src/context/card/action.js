@@ -1,5 +1,18 @@
 import { type } from './type';
 
+export const goNextStage = (level, direction, nextStage) => {
+  return {
+    type: type.GO_NEXT_STAGE,
+    payload: {
+      currentStage: nextStage,
+      direction: direction,
+      swapMechanic: level.swapMechanic,
+      after2FlipsHandler: level.after2FlipsHandler,
+      shiftSignalController: level.shiftSignalController,
+    },
+  };
+};
+
 export const updateCards = (cardArr) => {
   return {
     type: type.UPDATE_CARDS,
@@ -21,15 +34,15 @@ export const restartGame = () => {
   };
 };
 
-export const increaseMatchedCount = () => {
+export const increaseMatchCount = () => {
   return {
-    type: type.INCREASE_MATCHED_COUNT,
+    type: type.INCREASE_MATCH_COUNT,
   };
 };
 
-export const decreaseMatchedCount = () => {
+export const decreaseMatchCount = () => {
   return {
-    type: type.DECREASE_MATCHED_COUNT,
+    type: type.DECREASE_MATCH_COUNT,
   };
 };
 

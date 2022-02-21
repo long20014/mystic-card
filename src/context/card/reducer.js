@@ -4,6 +4,7 @@ import CardGridService from 'services/card-grid.service';
 const { initCardArray } = CardGridService;
 
 const cardReducer = (state, action) => {
+  // console.log(action.type);
   switch (action.type) {
     case type.UPDATE_CARDS:
       return {
@@ -31,13 +32,13 @@ const cardReducer = (state, action) => {
         moveCount: state.moveCount + 1,
       };
     }
-    case type.INCREASE_MATCHED_COUNT: {
+    case type.INCREASE_MATCH_COUNT: {
       return {
         ...state,
         matchCount: state.matchCount + 1,
       };
     }
-    case type.DECREASE_MATCHED_COUNT: {
+    case type.DECREASE_MATCH_COUNT: {
       return {
         ...state,
         matchCount: state.matchCount > 0 ? state.matchCount - 1 : 0,
@@ -55,13 +56,39 @@ const cardReducer = (state, action) => {
     case type.SET_GAME_LEVEL: {
       return {
         ...state,
-        gameLevel: { ...state.gameLevel, level: action.payload.level },
+        gameLevel: {
+          currentStage: action.payload.currentStage,
+          direction: action.payload.direction,
+          swapMechanic: { swap: action.payload.swapMechanic },
+          after2FlipsHandler: { handle: action.payload.after2FlipsHandler },
+          shiftSignalController: {
+            sendShiftSignal: action.payload.shiftSignalController,
+          },
+        },
       };
     }
     case type.SET_GO_SHIFT: {
       return {
         ...state,
         goShift: action.payload.goShift,
+      };
+    }
+    case type.GO_NEXT_STAGE: {
+      return {
+        ...state,
+        cardArr: initCardArray(),
+        matchCount: 0,
+        moveCount: 0,
+        isWinning: false,
+        gameLevel: {
+          currentStage: action.payload.currentStage,
+          direction: action.payload.direction,
+          swapMechanic: { swap: action.payload.swapMechanic },
+          after2FlipsHandler: { handle: action.payload.after2FlipsHandler },
+          shiftSignalController: {
+            sendShiftSignal: action.payload.shiftSignalController,
+          },
+        },
       };
     }
     default:

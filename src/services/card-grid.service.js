@@ -1,12 +1,33 @@
 import constants from 'utils/constants';
 import { GridService } from 'services/grid.service';
+import {
+  updateCards,
+  setWait,
+  setGoShift,
+  setGameLevel,
+} from 'context/card/index';
+import { getRandomInt } from 'utils/index';
 
-const { LEFT, RIGHT, UP, DOWN } = constants;
+const { LEFT, RIGHT, UP, DOWN, COMMON_TIMING } = constants;
 
 const getRandomPieceName = (pieceNames) => {
   const splicePos = Math.floor((Math.random() * 100) % pieceNames.length);
   const pieceId = pieceNames.splice(splicePos, 1);
   return pieceId[0];
+};
+
+const getDirection = () => {
+  const randomInt = getRandomInt(2);
+  return randomInt === 1 ? LEFT : RIGHT;
+};
+
+const getLevel = (state) => {
+  return state.gameLevel;
+};
+
+const setLevel = (level, dispatch) => {
+  localStorage.setItem('gameLevel', JSON.stringify(level));
+  dispatch(setGameLevel(level));
 };
 
 const shiftUnMatchedItemsOfArray = (arr, steps, direction) => {
@@ -71,58 +92,125 @@ const initCardArray = () => {
   return cardArr;
 };
 
+const getCardIndex = (cardArr, piece) => {
+  return cardArr.map((item) => item.id).indexOf(piece.id);
+};
+
 const flipCard = (piece, state, updateCards, dispatch) => {
   let status = DOWN;
-  const index = getCardIndex(state, piece);
+  const index = getCardIndex(state.cardArr, piece);
   if (piece.status === DOWN) status = UP;
   const newPiece = { ...piece, status: status };
   state.cardArr[index] = newPiece;
   dispatch(updateCards(state.cardArr));
 };
 
-const getCardIndex = (state, piece) =>
-  state.cardArr.map((item) => item.id).indexOf(piece.id);
+const findUnmatchedPieces = (state) => {
+  return state.cardArr.filter((card) => !card.matched && card.status === 'up');
+};
 
-const level1 = () => {};
+const swapLevel1 = (state, dispatch) => {
+  return;
+};
 
-const level2 = () => {};
+const swapLevel2 = (state, dispatch) => {
+  if (state.goShift) {
+    setTimeout(() => {
+      const shiftedArray = shiftUnMatchedItemsOfArray(
+        state.cardArr,
+        2,
+        state.gameLevel.direction
+      );
+      console.log(shiftedArray);
+      dispatch(updateCards(shiftedArray));
+      if (state.isWaiting) dispatch(setWait(false));
+    }, COMMON_TIMING + 100);
+  }
+};
 
-const level3 = () => {};
+const swapLevel3 = (state, dispatch) => {};
 
-const level4 = () => {};
+const swapLevel4 = (state, dispatch) => {};
 
-const level5 = () => {};
+const swapLevel5 = (state, dispatch) => {};
 
-const level6 = () => {};
+const swapLevel6 = (state, dispatch) => {};
 
-const level7 = () => {};
+const swapLevel7 = (state, dispatch) => {};
 
-const level8 = () => {};
+const swapLevel8 = (state, dispatch) => {};
 
-const level9 = () => {};
+const swapLevel9 = (state, dispatch) => {};
 
-const level10 = () => {};
+const swapLevel10 = (state, dispatch) => {};
 
 const swapMechanic = {
-  level1,
-  level2,
-  level3,
-  level4,
-  level5,
-  level6,
-  level7,
-  level8,
-  level9,
-  level10,
+  swapLevel1,
+  swapLevel2,
+  swapLevel3,
+  swapLevel4,
+  swapLevel5,
+  swapLevel6,
+  swapLevel7,
+  swapLevel8,
+  swapLevel9,
+  swapLevel10,
+};
+
+const noHandler = (state) => {
+  return;
+};
+
+const flipDownAfterSomeTurn = (state) => {
+  // flipdown after some turn
+};
+
+const after2FlipsHandler = {
+  noHandler,
+  flipDownAfterSomeTurn,
+};
+
+const sendShiftSignal = (state, dispatch, piece) => {
+  if (!state.goShift) {
+    const index = state.cardArr.indexOf(piece);
+    const isLastPiece = index === state.cardArr.length - 1;
+    if (isLastPiece) dispatch(setGoShift(true));
+  }
+};
+
+const shiftLevel1 = (state, dispatch, prevMatchCount, piece) => {
+  return;
+};
+
+const shiftLevel2 = (state, dispatch, prevMatchCount, piece) => {
+  if (prevMatchCount !== state.matchCount) {
+    sendShiftSignal(state, dispatch, piece);
+  }
+};
+
+const shiftLevel3 = (state, dispatch, prevMatchCount, piece) => {
+  sendShiftSignal(state, dispatch, piece);
+};
+
+const shiftSignalController = {
+  shiftLevel1,
+  shiftLevel2,
+  shiftLevel3,
 };
 
 const CardGridService = {
   getRandomPieceName,
   shiftUnMatchedItemsOfArray,
   initCardArray,
+  getDirection,
   flipCard,
   getCardIndex,
+  findUnmatchedPieces,
   swapMechanic,
+  after2FlipsHandler,
+  shiftSignalController,
+  setLevel,
+  getLevel,
 };
 
 export default CardGridService;

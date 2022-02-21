@@ -8,17 +8,15 @@ import {
   initGame,
   setWait,
   setWin,
-  increaseMatchedCount,
-  decreaseMatchedCount,
+  increaseMatchCount,
   restartGame,
-  setGoShift,
 } from 'context/card/index';
 import { isEven, square } from 'utils/index';
 import constants from 'utils/constants';
 
-const { LEFT, NORMAL, HARD, COMMON_TIMING } = constants;
+const { GRID_SIZE_LV2 } = constants;
 
-const { shiftUnMatchedItemsOfArray } = CardGridService;
+const { findUnmatchedPieces } = CardGridService;
 
 export const useCardGrid = () => {
   const { state, dispatch } = useCardContext();
@@ -41,22 +39,20 @@ export const useCardGrid = () => {
     return state.moveCount;
   };
 
-  const findUnmatchedPieces = () => {
-    return state.cardArr.filter(
-      (card) => !card.matched && card.status === 'up'
-    );
+  const getMatchCount = () => {
+    return state.matchCount;
   };
 
   useEffect(() => {
     if (!state.isInit) {
       dispatch(initGame(true));
-      // console.log('card-grid');
+      console.log(state.cardArr);
     }
   }, [state.isInit]);
 
   useEffect(() => {
     if (state.isInit) {
-      // console.log('rerender card grid');
+      // console.log('rerendered card grid');
       // console.log(state.cardArr);
     }
   });
@@ -76,7 +72,7 @@ export const useCardGrid = () => {
 
   useEffect(() => {
     if (isEven(state.moveCount)) {
-      const unmatchedPieces = findUnmatchedPieces();
+      const unmatchedPieces = findUnmatchedPieces(state);
       if (
         unmatchedPieces.length >= 2 &&
         unmatchedPieces[0].name === unmatchedPieces[1].name
@@ -88,28 +84,22 @@ export const useCardGrid = () => {
         state.cardArr[index0] = unmatchedPieces[0];
         state.cardArr[index1] = unmatchedPieces[1];
         dispatch(updateCards(state.cardArr));
-        dispatch(increaseMatchedCount());
+        dispatch(increaseMatchCount());
       }
-      if (state.gameLevel.level === NORMAL && state.isWaiting)
-        dispatch(setWait(false));
+      if (state.isWaiting) dispatch(setWait(false));
     }
   }, [state.moveCount]);
 
   useEffect(() => {
-    if (state.gameLevel.level === HARD && state.goShift) {
-      setTimeout(() => {
-        const shiftedArray = shiftUnMatchedItemsOfArray(state.cardArr, 2, LEFT);
-        dispatch(updateCards(shiftedArray));
-        if (state.isWaiting) dispatch(setWait(false));
-      }, COMMON_TIMING + 100);
+    if (state.goShift) {
+      state.gameLevel.swapMechanic.swap(state, dispatch);
     }
   }, [state.goShift]);
 
   const renderGridSlots = (cardArr) => {
     const slots = [];
     if (cardArr && cardArr.length > 0) {
-      const gridSize =
-        constants.GRID_SIZE_LV2.height * constants.GRID_SIZE_LV2.width;
+      const gridSize = GRID_SIZE_LV2.height * GRID_SIZE_LV2.width;
       for (let i = 0; i < gridSize; i++) {
         const piece = cardArr[i];
         slots.push(<CardGridSlot id={i} key={i} piece={piece} />);
@@ -125,6 +115,7 @@ export const useCardGrid = () => {
   return {
     getCardArr,
     getMoveCount,
+    getMatchCount,
     renderGridSlots,
     renderGridSlot,
     testWinGame,
