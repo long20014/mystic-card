@@ -57,6 +57,7 @@ const cardReducer = (state, action) => {
       return {
         ...state,
         gameLevel: {
+          ...gameLevel,
           currentStage: action.payload.currentStage,
           direction: action.payload.direction,
           swapMechanic: { swap: action.payload.swapMechanic },
@@ -81,6 +82,7 @@ const cardReducer = (state, action) => {
         moveCount: 0,
         isWinning: false,
         gameLevel: {
+          ...gameLevel,
           currentStage: action.payload.currentStage,
           direction: action.payload.direction,
           swapMechanic: { swap: action.payload.swapMechanic },

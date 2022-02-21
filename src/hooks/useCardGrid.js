@@ -65,7 +65,7 @@ export const useCardGrid = () => {
 
   useEffect(() => {
     if (state.isWinning) {
-      alert('You win the game');
+      setTimeout(() => alert('You win the game'), 500);
     }
     setShowRestartButton(state.isWinning);
   }, [state.isWinning]);
@@ -86,7 +86,6 @@ export const useCardGrid = () => {
         dispatch(updateCards(state.cardArr));
         dispatch(increaseMatchCount());
       }
-      if (state.isWaiting) dispatch(setWait(false));
     }
   }, [state.moveCount]);
 

@@ -55,12 +55,11 @@ export const useCardPiece = (piece) => {
   };
 
   const flipCardUp = (e) => {
-    console.log('flip up');
+    // console.log('flip up');
     if (piece.status === 'down' && !state.isWaiting) {
-      startFlipAnimation(180, COMMON_TIMING, 0, () => {
-        flipCard(piece, state, updateCards, dispatch);
-        dispatch(increaseMoveCount());
-      });
+      flipCard(piece, state, updateCards, dispatch);
+      dispatch(increaseMoveCount());
+      startFlipAnimation(180, COMMON_TIMING, 0, () => {});
       if (isEven(state.moveCount + 1) && !state.isWaiting) {
         dispatch(setWait(true));
       }
@@ -72,8 +71,11 @@ export const useCardPiece = (piece) => {
 
   const flipCardDown = () => {
     if (piece.status === 'up' && !piece.matched) {
+      flipCard(piece, state, updateCards, dispatch);
       startFlipAnimation(0, COMMON_TIMING, 0, () => {
-        flipCard(piece, state, updateCards, dispatch);
+        if (state.isWaiting) {
+          dispatch(setWait(false));
+        }
       });
     }
     // console.log(state.matchCount);

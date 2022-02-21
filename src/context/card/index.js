@@ -17,7 +17,7 @@ export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
   // const currentLevel = localStorage.getItem('gameLevels') || level[2];
-  const currentLevel = level[2];
+  const currentLevel = level[1];
   const initialState = {
     cardArr: cardArr,
     isInit: false,
@@ -27,6 +27,7 @@ export const CardStateProvider = ({ children }) => {
     isWinning: false,
     isWaiting: false,
     gameLevel: {
+      arraySize: 4,
       currentStage: currentLevel.stages[0],
       swapMechanic: { swap: currentLevel.swapMechanic },
       after2FlipsHandler: { handle: currentLevel.after2FlipsHandler },
