@@ -30,12 +30,10 @@ export const CardStateProvider = ({ children }) => {
       levelNumber: currentLevel.levelNumber,
       stages: currentLevel.stages,
       currentStage: currentLevel.stages[0],
-      swapMechanic: { swap: currentLevel.swapMechanic },
-      after2FlipsHandler: { handle: currentLevel.after2FlipsHandler },
-      shiftSignalController: {
-        sendShiftSignal: currentLevel.shiftSignalController,
-      },
       direction: direction,
+      swap: currentLevel.swapMechanic,
+      handleAfter2flips: currentLevel.after2FlipsHandler,
+      sendShiftSignal: currentLevel.shiftSignalController,
     },
   };
 

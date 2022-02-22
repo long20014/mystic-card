@@ -1,18 +1,5 @@
 import { type } from './type';
 
-// export const goNextStage = (level, direction, nextStage) => {
-//   return {
-//     type: type.GO_NEXT_STAGE,
-//     payload: {
-//       currentStage: nextStage,
-//       direction: direction,
-//       swapMechanic: level.swapMechanic,
-//       after2FlipsHandler: level.after2FlipsHandler,
-//       shiftSignalController: level.shiftSignalController,
-//     },
-//   };
-// };
-
 export const updateCards = (cardArr) => {
   return {
     type: type.UPDATE_CARDS,

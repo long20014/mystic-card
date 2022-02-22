@@ -79,12 +79,7 @@ export const useCardPiece = (piece) => {
       });
     }
     // console.log(state.matchCount);
-    state.gameLevel.shiftSignalController.sendShiftSignal(
-      state,
-      dispatch,
-      previousMatchCount,
-      piece
-    );
+    state.gameLevel.sendShiftSignal(state, dispatch, previousMatchCount, piece);
     // const index = state.cardArr.indexOf(piece);
     // const isLastPiece = index === state.cardArr.length - 1;
     // if (!state.goShift && isLastPiece) {

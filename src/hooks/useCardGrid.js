@@ -39,6 +39,9 @@ export const useCardGrid = () => {
           ...currentLevel,
           currentStage: currentLevel.stages[stageNumber],
           direction: direction,
+          swap: currentLevel.swapMechanic,
+          handleAfter2flips: currentLevel.after2FlipsHandler,
+          sendShiftSignal: currentLevel.shiftSignalController,
         },
         dispatch
       );
@@ -49,6 +52,9 @@ export const useCardGrid = () => {
           ...currentLevel,
           currentStage: currentLevel.stages[0],
           direction: direction,
+          swap: currentLevel.swapMechanic,
+          handleAfter2flips: currentLevel.after2FlipsHandler,
+          sendShiftSignal: currentLevel.shiftSignalController,
         },
         dispatch
       );
@@ -125,7 +131,7 @@ export const useCardGrid = () => {
 
   useEffect(() => {
     if (state.goShift) {
-      state.gameLevel.swapMechanic.swap(state, dispatch);
+      state.gameLevel.swap(state, dispatch);
     }
   }, [state.goShift]);
 
