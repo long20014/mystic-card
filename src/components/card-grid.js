@@ -12,18 +12,25 @@ export default function CardGrid() {
   const {
     testWinGame,
     handleRestartGame,
+    handleNextStage,
     showRestartButton,
     renderGridSlot,
     getCardArr,
     getMoveCount,
+    getGameLevel,
     getMatchCount,
   } = useCardGrid();
   const hiddenStyle = showRestartButton ? '' : styles.hidden;
   const cardArr = getCardArr();
   const moveCount = { count: getMoveCount() }; // this is used for flatlist re-render working
   const matchCount = getMatchCount();
+  const gameLevel = getGameLevel();
+  const gamelevelLabel = `Level: ${gameLevel.levelNumber} | Stage: ${gameLevel.currentStage.stageNumber}`;
   return (
     <SafeAreaView style={[styles.container]}>
+      <TouchableOpacity style={[styles.moveCount]}>
+        <Text style={[styles.textStyle]}>{gamelevelLabel}</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{moveCount.count}</Text>
       </TouchableOpacity>
@@ -38,6 +45,12 @@ export default function CardGrid() {
         keyExtractor={(item, index) => 'slot-' + index.toString()}
         renderItem={({ item }) => renderGridSlot(item)}
       />
+      <TouchableOpacity
+        style={[hiddenStyle, styles.buttonStyle]}
+        onPress={handleNextStage}
+      >
+        <Text style={[styles.textStyle]}>Next Stage</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={[hiddenStyle, styles.buttonStyle]}
         onPress={handleRestartGame}
@@ -76,7 +89,7 @@ const styles = StyleSheet.create({
   moveCount: {
     marginBottom: 16,
     marginTop: 16,
-    width: 130,
+    width: 150,
     backgroundColor: '#841584',
     alignItems: 'center',
     padding: 10,

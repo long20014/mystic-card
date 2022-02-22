@@ -13,10 +13,12 @@ import {
 } from 'context/card/index';
 import { isEven, square } from 'utils/index';
 import constants from 'utils/constants';
+import { levels } from 'data/levels';
 
 const { GRID_SIZE_LV2 } = constants;
 
-const { findUnmatchedPieces } = CardGridService;
+const { findUnmatchedPieces, setLevel, getLevel, getDirection } =
+  CardGridService;
 
 export const useCardGrid = () => {
   const { state, dispatch } = useCardContext();
@@ -27,12 +29,52 @@ export const useCardGrid = () => {
     dispatch(restartGame());
   };
 
+  const handleNextStage = () => {
+    let currentLevel = getLevel(state);
+    const direction = getDirection();
+    const stageNumber = currentLevel.currentStage.stageNumber;
+    if (stageNumber < currentLevel.stages.length) {
+      setLevel(
+        {
+          levelNumber: currentLevel.levelNumber,
+          currentStage: currentLevel.stages[stageNumber],
+          swapMechanic: { swap: currentLevel.swapMechanic },
+          after2FlipsHandler: { handle: currentLevel.after2FlipsHandler },
+          shiftSignalController: {
+            sendShiftSignal: currentLevel.shiftSignalController,
+          },
+          direction: direction,
+        },
+        dispatch
+      );
+    } else if (currentLevel.levelNumber < level.length) {
+      currentLevel = level[currentLevel.levelNumber];
+      setLevel(
+        {
+          levelNumber: currentLevel.levelNumber,
+          currentStage: currentLevel.stages[0],
+          swapMechanic: { swap: currentLevel.swapMechanic },
+          after2FlipsHandler: { handle: currentLevel.after2FlipsHandler },
+          shiftSignalController: {
+            sendShiftSignal: currentLevel.shiftSignalController,
+          },
+          direction: direction,
+        },
+        dispatch
+      );
+    }
+  };
+
   const testWinGame = () => {
     dispatch(setWin(true));
   };
 
   const getCardArr = () => {
     return state.cardArr;
+  };
+
+  const getGameLevel = () => {
+    return state.gameLevel;
   };
 
   const getMoveCount = () => {
@@ -115,10 +157,12 @@ export const useCardGrid = () => {
     getCardArr,
     getMoveCount,
     getMatchCount,
+    getGameLevel,
     renderGridSlots,
     renderGridSlot,
     testWinGame,
     handleRestartGame,
+    handleNextStage,
     showRestartButton,
   };
 };

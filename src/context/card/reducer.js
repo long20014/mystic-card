@@ -53,28 +53,14 @@ const cardReducer = (state, action) => {
         isWinning: false,
       };
     }
-    case type.SET_GAME_LEVEL: {
-      return {
-        ...state,
-        gameLevel: {
-          ...gameLevel,
-          currentStage: action.payload.currentStage,
-          direction: action.payload.direction,
-          swapMechanic: { swap: action.payload.swapMechanic },
-          after2FlipsHandler: { handle: action.payload.after2FlipsHandler },
-          shiftSignalController: {
-            sendShiftSignal: action.payload.shiftSignalController,
-          },
-        },
-      };
-    }
     case type.SET_GO_SHIFT: {
       return {
         ...state,
         goShift: action.payload.goShift,
       };
     }
-    case type.GO_NEXT_STAGE: {
+    case type.SET_GAME_LEVEL: {
+      const level = action.payload.level;
       return {
         ...state,
         cardArr: initCardArray(),
@@ -82,13 +68,15 @@ const cardReducer = (state, action) => {
         moveCount: 0,
         isWinning: false,
         gameLevel: {
-          ...gameLevel,
-          currentStage: action.payload.currentStage,
-          direction: action.payload.direction,
-          swapMechanic: { swap: action.payload.swapMechanic },
-          after2FlipsHandler: { handle: action.payload.after2FlipsHandler },
+          ...state.gameLevel,
+          levelNumber: level.levelNumber,
+          currentStage: level.currentStage,
+          stages: level.stages,
+          direction: level.direction,
+          swapMechanic: { swap: level.swapMechanic },
+          after2FlipsHandler: { handle: level.after2FlipsHandler },
           shiftSignalController: {
-            sendShiftSignal: action.payload.shiftSignalController,
+            sendShiftSignal: level.shiftSignalController,
           },
         },
       };
