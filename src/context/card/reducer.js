@@ -68,16 +68,7 @@ const cardReducer = (state, action) => {
         moveCount: 0,
         isWinning: false,
         gameLevel: {
-          ...state.gameLevel,
-          levelNumber: level.levelNumber,
-          currentStage: level.currentStage,
-          stages: level.stages,
-          direction: level.direction,
-          swapMechanic: { swap: level.swapMechanic },
-          after2FlipsHandler: { handle: level.after2FlipsHandler },
-          shiftSignalController: {
-            sendShiftSignal: level.shiftSignalController,
-          },
+          ...level,
         },
       };
     }

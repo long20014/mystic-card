@@ -26,7 +26,6 @@ const getLevel = (state) => {
 };
 
 const setLevel = (level, dispatch) => {
-  localStorage.setItem('gameLevel', JSON.stringify(level));
   dispatch(setGameLevel(level));
 };
 

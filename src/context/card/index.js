@@ -16,7 +16,6 @@ export const useCardContext = () => {
 export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
-  // const currentLevel = localStorage.getItem('gameLevels') || levels[2];
   const currentLevel = levels[1];
   const initialState = {
     cardArr: cardArr,

@@ -36,32 +36,24 @@ export const useCardGrid = () => {
     if (stageNumber < currentLevel.stages.length) {
       setLevel(
         {
-          levelNumber: currentLevel.levelNumber,
+          ...currentLevel,
           currentStage: currentLevel.stages[stageNumber],
-          swapMechanic: { swap: currentLevel.swapMechanic },
-          after2FlipsHandler: { handle: currentLevel.after2FlipsHandler },
-          shiftSignalController: {
-            sendShiftSignal: currentLevel.shiftSignalController,
-          },
           direction: direction,
         },
         dispatch
       );
-    } else if (currentLevel.levelNumber < level.length) {
-      currentLevel = level[currentLevel.levelNumber];
+    } else if (currentLevel.levelNumber < levels.length) {
+      currentLevel = levels[currentLevel.levelNumber];
       setLevel(
         {
-          levelNumber: currentLevel.levelNumber,
+          ...currentLevel,
           currentStage: currentLevel.stages[0],
-          swapMechanic: { swap: currentLevel.swapMechanic },
-          after2FlipsHandler: { handle: currentLevel.after2FlipsHandler },
-          shiftSignalController: {
-            sendShiftSignal: currentLevel.shiftSignalController,
-          },
           direction: direction,
         },
         dispatch
       );
+    } else {
+      alert('You have cleared all level');
     }
   };
 
@@ -106,9 +98,9 @@ export const useCardGrid = () => {
   }, [state.matchCount]);
 
   useEffect(() => {
-    if (state.isWinning) {
-      setTimeout(() => alert('You win the game'), 500);
-    }
+    // if (state.isWinning) {
+    //   setTimeout(() => alert('You win the game'), 500);
+    // }
     setShowRestartButton(state.isWinning);
   }, [state.isWinning]);
 
