@@ -77,3 +77,12 @@ export const setGoShift = (goShift) => {
     },
   };
 };
+
+export const setDirection = (direction) => {
+  return {
+    type: type.SET_DIRECTION,
+    payload: {
+      direction,
+    },
+  };
+};

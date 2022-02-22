@@ -72,6 +72,15 @@ const cardReducer = (state, action) => {
         },
       };
     }
+    case type.SET_DIRECTION: {
+      return {
+        ...state,
+        gameLevel: {
+          ...state.level,
+          direction: action.payload.direction,
+        },
+      };
+    }
     default:
       throw new Error('invalid action');
   }

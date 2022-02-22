@@ -27,18 +27,6 @@ const level1 = {
       _2starTimeRemain: 100,
       reward: null,
     },
-    {
-      stageNumber: 4,
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
-      reward: null,
-    },
-    {
-      stageNumber: 5,
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
-      reward: null,
-    },
   ],
 };
 
@@ -66,18 +54,6 @@ const level2 = {
     //   _2starTimeRemain: 100,
     //   reward: null,
     // },
-    // {
-    //   stageNumber: 4,
-    //   _3starTimeRemain: 100, //second
-    //   _2starTimeRemain: 100,
-    //   reward: null,
-    // },
-    // {
-    //   stageNumber: 5,
-    //   _3starTimeRemain: 100, //second
-    //   _2starTimeRemain: 100,
-    //   reward: null,
-    // },
   ],
 };
 
@@ -101,18 +77,6 @@ const level3 = {
     // },
     // {
     //   stageNumber: 3,
-    //   _3starTimeRemain: 100, //second
-    //   _2starTimeRemain: 100,
-    //   reward: null,
-    // },
-    // {
-    //   stageNumber: 4,
-    //   _3starTimeRemain: 100, //second
-    //   _2starTimeRemain: 100,
-    //   reward: null,
-    // },
-    // {
-    //   stageNumber: 5,
     //   _3starTimeRemain: 100, //second
     //   _2starTimeRemain: 100,
     //   reward: null,
