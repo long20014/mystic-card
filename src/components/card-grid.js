@@ -7,6 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { useCardGrid } from 'hooks/useCardGrid';
+import Timer from 'components/timer';
 
 export default function CardGrid() {
   const {
@@ -19,8 +20,12 @@ export default function CardGrid() {
     getMoveCount,
     getGameLevel,
     getMatchCount,
+    handleStartGame,
+    getIsInit,
   } = useCardGrid();
   const hiddenStyle = showRestartButton ? '' : styles.hidden;
+  const hiddenStyle2 = showRestartButton || getIsInit() ? styles.hidden : '';
+  const hiddenStyle3 = showRestartButton || !getIsInit() ? styles.hidden : '';
   const cardArr = getCardArr();
   const moveCount = { count: getMoveCount() }; // this is used for flatlist re-render working
   const matchCount = getMatchCount();
@@ -28,6 +33,7 @@ export default function CardGrid() {
   const gamelevelLabel = `Level: ${gameLevel.levelNumber} | Stage: ${gameLevel.currentStage.stageNumber}`;
   return (
     <SafeAreaView style={[styles.container]}>
+      <Timer />
       <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{gamelevelLabel}</Text>
       </TouchableOpacity>
@@ -57,8 +63,17 @@ export default function CardGrid() {
       >
         <Text style={[styles.textStyle]}>Restart Game</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.buttonStyle]} onPress={testWinGame}>
+      <TouchableOpacity
+        style={[hiddenStyle3, styles.buttonStyle]}
+        onPress={testWinGame}
+      >
         <Text style={[styles.textStyle]}>Win Game</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[hiddenStyle2, styles.buttonStyle]}
+        onPress={handleStartGame}
+      >
+        <Text style={[styles.textStyle]}>Start Gane</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

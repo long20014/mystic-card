@@ -86,3 +86,12 @@ export const setDirection = (direction) => {
     },
   };
 };
+
+export const setRemainTime = (timeRemain) => {
+  return {
+    type: type.SET_TIME_REMAIN,
+    payload: {
+      timeRemain,
+    },
+  };
+};

@@ -5,7 +5,7 @@ import CardGridService from 'services/card-grid.service';
 import constants from 'utils/constants';
 import { levels } from 'data/levels';
 
-const { initCardArray, getDirection } = CardGridService;
+const { initCardArray, getDirection, getRandomTurns } = CardGridService;
 
 export const useCardContext = () => {
   const { state, dispatch } = useContext(CardContext);
@@ -16,7 +16,9 @@ export const useCardContext = () => {
 export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
+  const turnForRedirection = useMemo(() => getRandomTurns(3, 5), []);
   const currentLevel = levels[1];
+  const currentStage = currentLevel.stages[0];
   const initialState = {
     cardArr: cardArr,
     isInit: false,
@@ -27,9 +29,12 @@ export const CardStateProvider = ({ children }) => {
     isWaiting: false,
     gameLevel: {
       arraySize: 4,
+      timeRemain: currentStage.timeLimit,
+      turnForFlipdown: currentLevel.turnForFlipdown,
+      turnForRedirection,
       levelNumber: currentLevel.levelNumber,
       stages: currentLevel.stages,
-      currentStage: currentLevel.stages[0],
+      currentStage: currentStage,
       direction: direction,
       swap: currentLevel.swapMechanic,
       handleAfter2flips: currentLevel.after2FlipsHandler,

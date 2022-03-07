@@ -7,6 +7,11 @@ export function getRandomInt(max) {
   return result;
 }
 
+export function getRandomIntInRange(min, max) {
+  let result = Math.floor(Math.random() * Math.floor(max - min)) + min;
+  return result;
+}
+
 export function square(number) {
   return number * number;
 }

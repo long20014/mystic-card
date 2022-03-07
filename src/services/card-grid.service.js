@@ -5,8 +5,9 @@ import {
   setWait,
   setGoShift,
   setGameLevel,
+  setDirection,
 } from 'context/card/index';
-import { getRandomInt } from 'utils/index';
+import { getRandomInt, getRandomIntInRange } from 'utils/index';
 
 const { LEFT, RIGHT, UP, DOWN, COMMON_TIMING } = constants;
 
@@ -19,6 +20,14 @@ const getRandomPieceName = (pieceNames) => {
 const getDirection = () => {
   const randomInt = getRandomInt(2);
   return randomInt === 1 ? LEFT : RIGHT;
+};
+
+const getRandomTurns = (min, max) => {
+  return getRandomIntInRange(min, max) * 2;
+};
+
+const getOppositeDirection = (direction) => {
+  return direction === LEFT ? RIGHT : LEfFT;
 };
 
 const getLevel = (state) => {
@@ -156,17 +165,26 @@ const swapMechanic = {
   swapLevel10,
 };
 
-const noHandler = (state) => {
+const noHandler = (state, dispatch) => {
   return;
 };
 
-const flipDownAfterSomeTurn = (state) => {
+const flipDownAfterSomeTurns = (state, dispatch) => {
   // flipdown after some turn
+  if (state.moveCount % state.gameLevel.turnForFlipdown === 0) {
+    dispatch(setDirection(getOppositeDirection()));
+  }
+};
+
+const changeDirectionAfterSomeTurns = (state, dispatch) => {
+  if (state.moveCount % state.gameLevel.turnForRedirection === 0) {
+    dispatch(setDirection(getOppositeDirection()));
+  }
 };
 
 const after2FlipsHandler = {
   noHandler,
-  flipDownAfterSomeTurn,
+  flipDownAfterSomeTurns,
 };
 
 const sendShiftSignal = (state, dispatch, piece) => {
@@ -210,6 +228,8 @@ const CardGridService = {
   shiftSignalController,
   setLevel,
   getLevel,
+  getOppositeDirection,
+  getRandomTurns,
 };
 
 export default CardGridService;

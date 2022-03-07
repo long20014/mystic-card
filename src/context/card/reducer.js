@@ -51,6 +51,7 @@ const cardReducer = (state, action) => {
         matchCount: 0,
         moveCount: 0,
         isWinning: false,
+        isInit: false,
       };
     }
     case type.SET_GO_SHIFT: {
@@ -67,6 +68,7 @@ const cardReducer = (state, action) => {
         matchCount: 0,
         moveCount: 0,
         isWinning: false,
+        isInit: false,
         gameLevel: {
           ...level,
         },
@@ -76,8 +78,17 @@ const cardReducer = (state, action) => {
       return {
         ...state,
         gameLevel: {
-          ...state.level,
+          ...state.gameLevel,
           direction: action.payload.direction,
+        },
+      };
+    }
+    case type.SET_TIME_REMAIN: {
+      return {
+        ...state,
+        gameLevel: {
+          ...state.gameLevel,
+          timeRemain: action.payload.timeRemain,
         },
       };
     }
