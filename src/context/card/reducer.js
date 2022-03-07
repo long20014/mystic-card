@@ -92,6 +92,15 @@ const cardReducer = (state, action) => {
         },
       };
     }
+    case type.SAVE_SCORE: {
+      return {
+        ...state,
+        scoreBoard: {
+          ...state.scoreBoard,
+          [action.payload.stageName]: { star: action.payload.star },
+        },
+      };
+    }
     default:
       throw new Error('invalid action');
   }

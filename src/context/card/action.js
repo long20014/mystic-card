@@ -95,3 +95,13 @@ export const setRemainTime = (timeRemain) => {
     },
   };
 };
+
+export const saveScore = (stageName, star) => {
+  return {
+    type: type.SAVE_SCORE,
+    payload: {
+      stageName,
+      star,
+    },
+  };
+};

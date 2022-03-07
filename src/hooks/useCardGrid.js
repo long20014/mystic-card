@@ -8,6 +8,7 @@ import {
   setWin,
   increaseMatchCount,
   restartGame,
+  saveScore,
 } from 'context/card/index';
 import { isEven, square } from 'utils/index';
 import constants from 'utils/constants';
@@ -22,6 +23,7 @@ export const useCardGrid = () => {
   const { state, dispatch } = useCardContext();
 
   const [showRestartButton, setShowRestartButton] = useState(false);
+  const [showNextStageButton, setShowNextStageButton] = useState(false);
 
   const handleRestartGame = () => {
     dispatch(restartGame());
@@ -67,6 +69,9 @@ export const useCardGrid = () => {
 
   const handleStartGame = () => {
     if (!state.isInit) {
+      console.log(state.cardArr);
+      console.log(state.scoreBoard);
+      console.log(calculateTotalStar() + ' stars');
       dispatch(initGame(true));
     }
   };
@@ -95,13 +100,28 @@ export const useCardGrid = () => {
     return state.matchCount;
   };
 
-  const getStar = (timeRemain) => {
+  const getStarCount = (timeRemain) => {
     if (timeRemain > state.gameLevel.currentStage._3starTimeRemain) {
-      return '3 stars';
+      return 3;
     } else if (timeRemain > state.gameLevel.currentStage._2starTimeRemain) {
-      return '2 stars';
+      return 2;
     }
-    return '1 star';
+    return 1;
+  };
+
+  const getStarCountString = (starCount) => {
+    if (starCount > 1) {
+      return starCount + ' stars';
+    }
+    return starCount + ' star';
+  };
+
+  const calculateTotalStar = () => {
+    let result = 0;
+    for (const property in state.scoreBoard) {
+      result += state.scoreBoard[property]['star'];
+    }
+    return result;
   };
 
   useEffect(() => {
@@ -112,7 +132,7 @@ export const useCardGrid = () => {
   });
 
   useEffect(() => {
-    if (state.matchCount === square(state.gameLevel.arraySize) / 2) {
+    if (state.matchCount === square(state.arraySize) / 2) {
       handleWinGame();
     }
   }, [state.matchCount]);
@@ -122,14 +142,25 @@ export const useCardGrid = () => {
     //   setTimeout(() => alert('You win the game'), 500);
     // }
     setShowRestartButton(state.isWinning);
+    setShowNextStageButton(state.isWinning);
   }, [state.isWinning]);
+
+  useEffect(() => {
+    if (state.gameLevel.timeRemain <= 0) {
+      setShowRestartButton(true);
+    }
+  }, [state.gameLevel.timeRemain]);
 
   useEffect(() => {
     if (
       state.gameLevel.timeRemain !== state.gameLevel.currentStage.timeLimit &&
       state.isWinning
     ) {
-      alert(`You got ${getStar(state.gameLevel.timeRemain)}`, 500);
+      const startCount = getStarCount(state.gameLevel.timeRemain);
+      const startCountString = getStarCountString(startCount);
+      const stageName = `level-${state.gameLevel.levelNumber}_stage-${state.gameLevel.currentStage.stageNumber}`;
+      dispatch(saveScore(stageName, startCount));
+      alert(`You got ${startCountString}`, 500);
     }
   }, [state.gameLevel.timeRemain]);
 
@@ -185,6 +216,7 @@ export const useCardGrid = () => {
     handleRestartGame,
     handleNextStage,
     showRestartButton,
+    showNextStageButton,
     handleStartGame,
     getIsInit,
   };

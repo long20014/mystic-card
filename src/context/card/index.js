@@ -21,14 +21,15 @@ export const CardStateProvider = ({ children }) => {
   const currentStage = currentLevel.stages[0];
   const initialState = {
     cardArr: cardArr,
+    arraySize: 4,
     isInit: false,
     goShift: false,
+    scoreBoard: {},
     moveCount: 0,
     matchCount: 0,
     isWinning: false,
     isWaiting: false,
     gameLevel: {
-      arraySize: 4,
       timeRemain: currentStage.timeLimit,
       turnForFlipdown: currentLevel.turnForFlipdown,
       turnForRedirection,

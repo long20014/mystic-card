@@ -13,22 +13,22 @@ const level1 = {
     {
       stageNumber: 1,
       timeLimit: 180, //second
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      _3starTimeRemain: 120, //second
+      _2starTimeRemain: 60,
       reward: null,
     },
     {
       stageNumber: 2,
-      timeLimit: 180, //second
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      timeLimit: 120, //second
+      _3starTimeRemain: 80, //second
+      _2starTimeRemain: 40,
       reward: null,
     },
     {
       stageNumber: 3,
-      timeLimit: 180, //second
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      timeLimit: 90, //second
+      _3starTimeRemain: 60, //second
+      _2starTimeRemain: 30,
       reward: null,
     },
   ],

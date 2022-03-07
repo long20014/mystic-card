@@ -15,6 +15,7 @@ export default function CardGrid() {
     handleRestartGame,
     handleNextStage,
     showRestartButton,
+    showNextStageButton,
     renderGridSlot,
     getCardArr,
     getMoveCount,
@@ -26,6 +27,7 @@ export default function CardGrid() {
   const hiddenStyle = showRestartButton ? '' : styles.hidden;
   const hiddenStyle2 = showRestartButton || getIsInit() ? styles.hidden : '';
   const hiddenStyle3 = showRestartButton || !getIsInit() ? styles.hidden : '';
+  const hiddenStyle4 = showNextStageButton ? '' : styles.hidden;
   const cardArr = getCardArr();
   const moveCount = { count: getMoveCount() }; // this is used for flatlist re-render working
   const matchCount = getMatchCount();
@@ -40,9 +42,9 @@ export default function CardGrid() {
       <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{moveCount.count}</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.moveCount]}>
+      {/* <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{matchCount}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <FlatList
         contentContainerStyle={styles.grid}
         numColumns={4}
@@ -52,7 +54,7 @@ export default function CardGrid() {
         renderItem={({ item }) => renderGridSlot(item)}
       />
       <TouchableOpacity
-        style={[hiddenStyle, styles.buttonStyle]}
+        style={[hiddenStyle4, styles.buttonStyle]}
         onPress={handleNextStage}
       >
         <Text style={[styles.textStyle]}>Next Stage</Text>

@@ -7,7 +7,7 @@ import {
   setGameLevel,
   setDirection,
 } from 'context/card/index';
-import { getRandomInt, getRandomIntInRange } from 'utils/index';
+import { getRandomInt, getRandomIntInRange, isEven } from 'utils/index';
 
 const { LEFT, RIGHT, UP, DOWN, COMMON_TIMING } = constants;
 
@@ -118,6 +118,9 @@ const findUnmatchedPieces = (state) => {
 };
 
 const swapLevel1 = (state, dispatch) => {
+  if (state.goShift) {
+    if (state.isWaiting) dispatch(setWait(false));
+  }
   return;
 };
 
@@ -196,7 +199,9 @@ const sendShiftSignal = (state, dispatch, piece) => {
 };
 
 const shiftLevel1 = (state, dispatch, prevMatchCount, piece) => {
-  return;
+  if (isEven(state.moveCount)) {
+    sendShiftSignal(state, dispatch, piece);
+  }
 };
 
 const shiftLevel2 = (state, dispatch, prevMatchCount, piece) => {
