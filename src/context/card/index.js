@@ -2,7 +2,6 @@ import React, { useContext, useReducer, useMemo } from 'react';
 import { CardContext } from './context';
 import CardReducer from './reducer';
 import CardGridService from 'services/card-grid.service';
-import constants from 'utils/constants';
 import { levels } from 'data/levels';
 
 const { initCardArray, getDirection, getRandomTurns } = CardGridService;
@@ -17,7 +16,7 @@ export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
   const turnForRedirection = useMemo(() => getRandomTurns(3, 5), []);
-  const currentLevel = levels[2];
+  const currentLevel = levels[0];
   const currentStage = currentLevel.stages[2];
   const initialState = {
     cardArr: cardArr,

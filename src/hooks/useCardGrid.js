@@ -124,6 +124,17 @@ export const useCardGrid = () => {
     return result;
   };
 
+  const calculateBestTime = (stageName, state, timeRemain) => {
+    if (state.scoreBoard[stageName]) {
+      const bestTime =
+        state.scoreBoard[stageName].bestTime < timeRemain
+          ? timeRemain
+          : tate.scoreBoard[stageName].bestTime;
+      return bestTime;
+    }
+    return timeRemain;
+  };
+
   useEffect(() => {
     if (state.isInit) {
       // console.log('rerendered card grid');
@@ -159,7 +170,12 @@ export const useCardGrid = () => {
       const startCount = getStarCount(state.gameLevel.timeRemain);
       const startCountString = getStarCountString(startCount);
       const stageName = `level-${state.gameLevel.levelNumber}_stage-${state.gameLevel.currentStage.stageNumber}`;
-      dispatch(saveScore(stageName, startCount));
+      const bestTime = calculateBestTime(
+        stageName,
+        state,
+        state.gameLevel.timeRemain
+      );
+      dispatch(saveScore(stageName, startCount, bestTime));
       alert(`You got ${startCountString}`, 500);
     }
   }, [state.gameLevel.timeRemain]);

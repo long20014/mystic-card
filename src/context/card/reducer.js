@@ -97,7 +97,10 @@ const cardReducer = (state, action) => {
         ...state,
         scoreBoard: {
           ...state.scoreBoard,
-          [action.payload.stageName]: { star: action.payload.star },
+          [action.payload.stageName]: {
+            star: action.payload.star,
+            bestTime: action.payload.bestTime,
+          },
         },
       };
     }

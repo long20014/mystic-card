@@ -96,12 +96,13 @@ export const setRemainTime = (timeRemain) => {
   };
 };
 
-export const saveScore = (stageName, star) => {
+export const saveScore = (stageName, star, bestTime) => {
   return {
     type: type.SAVE_SCORE,
     payload: {
       stageName,
       star,
+      bestTime,
     },
   };
 };
