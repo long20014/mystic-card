@@ -17,8 +17,8 @@ export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
   const turnForRedirection = useMemo(() => getRandomTurns(3, 5), []);
-  const currentLevel = levels[1];
-  const currentStage = currentLevel.stages[0];
+  const currentLevel = levels[2];
+  const currentStage = currentLevel.stages[2];
   const initialState = {
     cardArr: cardArr,
     arraySize: 4,

@@ -9,6 +9,7 @@ const level1 = {
   swapMechanic: swapMechanic.swapLevel1,
   after2FlipsHandler: after2FlipsHandler.noHandler,
   shiftSignalController: shiftSignalController.shiftLevel1,
+  hint: `Nothing special`,
   stages: [
     {
       stageNumber: 1,
@@ -16,6 +17,8 @@ const level1 = {
       _3starTimeRemain: 120, //second
       _2starTimeRemain: 60,
       reward: null,
+      description: `Finish this stage with remain time > 120s to earn 3 stars
+      Finish this stage with remain time > 60s to earn 2 stars`,
     },
     {
       stageNumber: 2,
@@ -23,6 +26,8 @@ const level1 = {
       _3starTimeRemain: 80, //second
       _2starTimeRemain: 40,
       reward: null,
+      description: `Finish this stage with remain time > 80s to earn 3 stars
+      Finish this stage with remain time > 40s to earn 2 stars`,
     },
     {
       stageNumber: 3,
@@ -30,6 +35,8 @@ const level1 = {
       _3starTimeRemain: 60, //second
       _2starTimeRemain: 30,
       reward: null,
+      description: `Finish this stage with remain time > 60s to earn 3 stars
+      Finish this stage with remain time > 30s to earn 2 stars`,
     },
   ],
 };
@@ -40,27 +47,35 @@ const level2 = {
   swapMechanic: swapMechanic.swapLevel2,
   after2FlipsHandler: after2FlipsHandler.noHandler,
   shiftSignalController: shiftSignalController.shiftLevel2,
+  hint: `Each times you found a matched pair, the cards will shift
+  left or right 2 square, the shift direction remain through the stage`,
   stages: [
     {
       stageNumber: 1,
-      timeLimit: 10, //second
-      _3starTimeRemain: 8, //second
-      _2starTimeRemain: 5,
+      timeLimit: 180, //second
+      _3starTimeRemain: 120, //second
+      _2starTimeRemain: 60,
       reward: null,
+      description: `Finish this stage with remain time > 120s to earn 3 stars
+      Finish this stage with remain time > 60s to earn 2 stars`,
     },
     {
       stageNumber: 2,
-      timeLimit: 180, //second
+      timeLimit: 150, //second
       _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      _2starTimeRemain: 50,
       reward: null,
+      description: `Finish this stage with remain time > 100s to earn 3 stars
+      Finish this stage with remain time > 50s to earn 2 stars`,
     },
     {
       stageNumber: 3,
-      timeLimit: 180, //second
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      timeLimit: 120, //second
+      _3starTimeRemain: 80, //second
+      _2starTimeRemain: 40,
       reward: null,
+      description: `Finish this stage with remain time > 80s to earn 3 stars
+      Finish this stage with remain time > 40s to earn 2 stars`,
     },
   ],
 };
@@ -71,27 +86,35 @@ const level3 = {
   swapMechanic: swapMechanic.swapLevel2,
   after2FlipsHandler: after2FlipsHandler.noHandler,
   shiftSignalController: shiftSignalController.shiftLevel3,
+  hint: `Each 2 times you flip the card, the cards will shift
+  left or right 2 square, the shift direction remain through the stage`,
   stages: [
     {
       stageNumber: 1,
-      timeLimit: 180, //second
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      timeLimit: 420, //second
+      _3starTimeRemain: 210, //second
+      _2starTimeRemain: 120,
       reward: null,
+      description: `Finish this stage with remain time > 210s to earn 3 stars
+      Finish this stage with remain time > 120s to earn 2 stars`,
     },
     {
       stageNumber: 2,
-      timeLimit: 180, //second
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      timeLimit: 360, //second
+      _3starTimeRemain: 180, //second
+      _2starTimeRemain: 120,
       reward: null,
+      description: `Finish this stage with remain time > 180s to earn 3 stars
+      Finish this stage with remain time > 120s to earn 2 stars`,
     },
     {
       stageNumber: 3,
-      timeLimit: 180, //second
-      _3starTimeRemain: 100, //second
-      _2starTimeRemain: 100,
+      timeLimit: 300, //second
+      _3starTimeRemain: 180, //second
+      _2starTimeRemain: 90,
       reward: null,
+      description: `Finish this stage with remain time > 180s to earn 3 stars
+      Finish this stage with remain time > 90s to earn 2 stars`,
     },
   ],
 };
