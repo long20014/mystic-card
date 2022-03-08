@@ -34,7 +34,7 @@ export default function Timer() {
     if (time <= 0) {
       stopTimer();
       if (!state.isWinning) {
-        alert('You lose!!!');
+        setTimeout(() => alert('You lose!!!'), 500);
       }
     }
   }, [time]);

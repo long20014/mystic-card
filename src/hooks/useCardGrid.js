@@ -176,7 +176,7 @@ export const useCardGrid = () => {
         state.gameLevel.timeRemain
       );
       dispatch(saveScore(stageName, startCount, bestTime));
-      alert(`You got ${startCountString}`, 500);
+      setTimeout(() => alert(`You got ${startCountString}`), 500);
     }
   }, [state.gameLevel.timeRemain]);
 
