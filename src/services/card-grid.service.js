@@ -123,7 +123,9 @@ const findMatchedPieces = (state) => {
 };
 
 const findOtherPairMember = (pieces, piece) => {
-  return pieces.find((item) => item.name === piece.name);
+  return pieces.find(
+    (item) => item.id !== piece.id && item.name === piece.name
+  );
 };
 
 const swapLevel1 = (state, dispatch) => {
@@ -185,22 +187,22 @@ const flipDownAfterSomeTurns = (state, dispatch) => {
   // flipdown after some turn
   if (state.gameLevel.turnForFlipDownCount <= 0) {
     const matchedPieces = findMatchedPieces(state);
-    const firstPiece = matchedPieces[0];
-    const secondPiece = findOtherPairMember(matchedPieces, firstPiece);
-    firstPiece.matched = false;
-    secondPiece.matched = false;
-    flipCard(firstPiece, state, updateCards, dispatch);
-    flipCard(secondPiece, state, updateCards, dispatch);
+    if (matchedPieces && matchedPieces.length >= 2) {
+      const firstPiece = matchedPieces[0];
+      const secondPiece = findOtherPairMember(matchedPieces, firstPiece);
+      firstPiece.matched = false;
+      secondPiece.matched = false;
+      const index0 = state.cardArr.indexOf(firstPiece);
+      const index1 = state.cardArr.indexOf(secondPiece);
+      state.cardArr[index0] = firstPiece;
+      state.cardArr[index1] = secondPiece;
+      dispatch(updateCards(state.cardArr));
+    }
   }
 };
 
-const resetTurnForFlipDownCount = (state, dispatch, prevMatchCount) => {
-  if (
-    state.gameLevel.turnForFlipDown > 0 &&
-    prevMatchCount !== state.matchCount
-  ) {
-    dispatch(setTurnForFlipDownCount(state.gameLevel.turnForFlipDown));
-  }
+const resetTurnForFlipDownCount = (state, dispatch) => {
+  dispatch(setTurnForFlipDownCount(state.gameLevel.turnForFlipDown));
 };
 
 const reduceTurnForFlipDownCount = (state, dispatch) => {
@@ -221,11 +223,15 @@ const after2FlipsHandler = {
   reduceTurnForFlipDownCount,
 };
 
+const isLastPiece = (state, piece) => {
+  const index = state.cardArr.indexOf(piece);
+  const isLastPiece = index === state.cardArr.length - 1;
+  return isLastPiece;
+};
+
 const sendShiftSignal = (state, dispatch, piece) => {
-  if (!state.goShift) {
-    const index = state.cardArr.indexOf(piece);
-    const isLastPiece = index === state.cardArr.length - 1;
-    if (isLastPiece) dispatch(setGoShift(true));
+  if (!state.goShift && isLastPiece(state, piece)) {
+    dispatch(setGoShift(true));
   }
 };
 
@@ -267,6 +273,8 @@ const CardGridService = {
   getOppositeDirection,
   getRandomTurns,
   resetTurnForFlipDownCount,
+  flipDownAfterSomeTurns,
+  isLastPiece,
 };
 
 export default CardGridService;

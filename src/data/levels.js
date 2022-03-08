@@ -121,7 +121,7 @@ const level3 = {
 
 const level4 = {
   levelNumber: 3,
-  turnForFlipDown: 12,
+  turnForFlipDown: 4,
   swapMechanic: swapMechanic.swapLevel2,
   after2FlipsHandler: after2FlipsHandler.reduceTurnForFlipDownCount,
   shiftSignalController: shiftSignalController.shiftLevel3,

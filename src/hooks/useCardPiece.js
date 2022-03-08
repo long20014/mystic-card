@@ -14,7 +14,13 @@ import { usePrevious } from 'hooks/usePrevious';
 
 const { UP, COMMON_TIMING } = constants;
 
-const { flipCard, getCardIndex, resetTurnForFlipDownCount } = CardGridService;
+const {
+  flipCard,
+  getCardIndex,
+  resetTurnForFlipDownCount,
+  flipDownAfterSomeTurns,
+  isLastPiece,
+} = CardGridService;
 
 export const useCardPiece = (piece) => {
   const { state, dispatch } = useCardContext();
@@ -70,22 +76,34 @@ export const useCardPiece = (piece) => {
   };
 
   const flipCardDown = () => {
-    if (piece.status === 'up' && !piece.matched) {
-      flipCard(piece, state, updateCards, dispatch);
-      startFlipAnimation(0, COMMON_TIMING, 0, () => {
-        if (state.isWaiting) {
-          dispatch(setWait(false));
-        }
-      });
-    }
-    // console.log(state.matchCount);
-    resetTurnForFlipDownCount(state, dispatch, previousMatchCount);
-    state.gameLevel.sendShiftSignal(state, dispatch, previousMatchCount, piece);
+    flipCard(piece, state, updateCards, dispatch);
+    startFlipAnimation(0, COMMON_TIMING, 0, () => {
+      if (state.isWaiting) {
+        dispatch(setWait(false));
+      }
+    });
   };
 
   useEffect(() => {
     if (isEven(state.moveCount)) {
-      setTimeout(() => flipCardDown(), COMMON_TIMING);
+      setTimeout(() => {
+        if (piece.status === 'up' && !piece.matched) {
+          flipCardDown();
+        }
+        if (
+          state.gameLevel.turnForFlipDown > 0 &&
+          previousMatchCount !== state.matchCount
+        ) {
+          resetTurnForFlipDownCount(state, dispatch, previousMatchCount);
+        }
+        state.gameLevel.sendShiftSignal(
+          state,
+          dispatch,
+          previousMatchCount,
+          piece
+        );
+        if (isLastPiece(state, piece)) flipDownAfterSomeTurns(state, dispatch);
+      }, COMMON_TIMING);
     }
   }, [state.moveCount, state.matchCount]);
 
