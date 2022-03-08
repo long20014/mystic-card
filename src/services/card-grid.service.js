@@ -185,7 +185,10 @@ const noHandler = (state, dispatch) => {
 
 const flipDownAfterSomeTurns = (state, dispatch) => {
   // flipdown after some turn
-  if (state.gameLevel.turnForFlipDownCount <= 0) {
+  if (
+    state.gameLevel.turnForFlipDown > 0 &&
+    state.gameLevel.turnForFlipDownCount <= 0
+  ) {
     const matchedPieces = findMatchedPieces(state);
     if (matchedPieces && matchedPieces.length >= 2) {
       const firstPiece = matchedPieces[0];
