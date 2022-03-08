@@ -111,7 +111,7 @@ export const useCardPiece = (piece) => {
     if (!state.isInit) {
       flipCardDown();
     }
-  }, []);
+  }, [state.isInit]);
 
   return {
     flipCardUp,
