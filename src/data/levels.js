@@ -6,9 +6,9 @@ const { swapMechanic, after2FlipsHandler, shiftSignalController } =
 const level1 = {
   levelNumber: 1,
   turnForFlipDown: 0,
-  swapMechanic: swapMechanic.swapLevel1,
-  after2FlipsHandler: after2FlipsHandler.noHandler,
-  shiftSignalController: shiftSignalController.shiftLevel1,
+  swap: swapMechanic.swapLevel1,
+  handleAfter2flips: after2FlipsHandler.noHandler,
+  sendShiftSignal: shiftSignalController.shiftLevel1,
   hint: `Nothing special`,
   stages: [
     {
@@ -44,9 +44,9 @@ const level1 = {
 const level2 = {
   levelNumber: 2,
   turnForFlipDown: 0,
-  swapMechanic: swapMechanic.swapLevel2,
-  after2FlipsHandler: after2FlipsHandler.noHandler,
-  shiftSignalController: shiftSignalController.shiftLevel2,
+  swap: swapMechanic.swapLevel2,
+  handleAfter2flips: after2FlipsHandler.noHandler,
+  sendShiftSignal: shiftSignalController.shiftLevel2,
   hint: `Each times you found a matched pair, the cards will shift
   left or right 2 square, the shift direction remain through the stage`,
   stages: [
@@ -83,9 +83,9 @@ const level2 = {
 const level3 = {
   levelNumber: 3,
   turnForFlipDown: 0,
-  swapMechanic: swapMechanic.swapLevel2,
-  after2FlipsHandler: after2FlipsHandler.noHandler,
-  shiftSignalController: shiftSignalController.shiftLevel3,
+  swap: swapMechanic.swapLevel2,
+  handleAfter2flips: after2FlipsHandler.noHandler,
+  sendShiftSignal: shiftSignalController.shiftLevel3,
   hint: `Each 2 times you flip the card, the cards will shift
   left or right 2 square, the shift direction remain through the stage`,
   stages: [
@@ -122,9 +122,9 @@ const level3 = {
 const level4 = {
   levelNumber: 3,
   turnForFlipDown: 12,
-  swapMechanic: swapMechanic.swapLevel2,
-  after2FlipsHandler: after2FlipsHandler.reduceTurnForFlipDownCount,
-  shiftSignalController: shiftSignalController.shiftLevel3,
+  swap: swapMechanic.swapLevel2,
+  handleAfter2flips: after2FlipsHandler.reduceTurnForFlipDownCount,
+  sendShiftSignal: shiftSignalController.shiftLevel3,
   hint: `Each 2 times you flip the card, the cards will shift
   left or right 2 square, the shift direction remain through the stage`,
   stages: [

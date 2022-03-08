@@ -12,7 +12,7 @@ import { isEven } from 'utils/index';
 import constants from 'utils/constants';
 import { usePrevious } from 'hooks/usePrevious';
 
-const { UP, COMMON_TIMING } = constants;
+const { UP, DOWN, COMMON_TIMING } = constants;
 
 const {
   flipCard,
@@ -63,7 +63,7 @@ export const useCardPiece = (piece) => {
   const flipCardUp = (e) => {
     // console.log('flip up');
     if (state.isInit && piece.status === 'down' && !state.isWaiting) {
-      flipCard(piece, state, updateCards, dispatch);
+      flipCard(piece, state, updateCards, dispatch, UP);
       dispatch(increaseMoveCount());
       startFlipAnimation(180, COMMON_TIMING, 0, () => {});
       if (isEven(state.moveCount + 1) && !state.isWaiting) {
@@ -76,7 +76,7 @@ export const useCardPiece = (piece) => {
   };
 
   const flipCardDown = () => {
-    flipCard(piece, state, updateCards, dispatch);
+    flipCard(piece, state, updateCards, dispatch, DOWN);
     startFlipAnimation(0, COMMON_TIMING, 0, () => {
       if (state.isWaiting) {
         dispatch(setWait(false));
@@ -106,6 +106,12 @@ export const useCardPiece = (piece) => {
       }, COMMON_TIMING);
     }
   }, [state.moveCount, state.matchCount]);
+
+  useEffect(() => {
+    if (!state.isInit) {
+      flipCardDown();
+    }
+  }, []);
 
   return {
     flipCardUp,

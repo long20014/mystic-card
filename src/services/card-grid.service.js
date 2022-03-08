@@ -105,10 +105,8 @@ const getCardIndex = (cardArr, piece) => {
   return cardArr.map((item) => item.id).indexOf(piece.id);
 };
 
-const flipCard = (piece, state, updateCards, dispatch) => {
-  let status = DOWN;
+const flipCard = (piece, state, updateCards, dispatch, status) => {
   const index = getCardIndex(state.cardArr, piece);
-  if (piece.status === DOWN) status = UP;
   const newPiece = { ...piece, status: status };
   state.cardArr[index] = newPiece;
   dispatch(updateCards(state.cardArr));
