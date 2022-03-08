@@ -6,6 +6,7 @@ import {
   setGoShift,
   setGameLevel,
   setDirection,
+  setTurnForFlipDownCount,
 } from 'context/card/index';
 import { getRandomInt, getRandomIntInRange, isEven } from 'utils/index';
 
@@ -117,6 +118,14 @@ const findUnmatchedPieces = (state) => {
   return state.cardArr.filter((card) => !card.matched && card.status === 'up');
 };
 
+const findMatchedPieces = (state) => {
+  return state.cardArr.filter((card) => card.matched && card.status === 'up');
+};
+
+const findOtherPairMember = (pieces, piece) => {
+  return pieces.find((item) => item.name === piece.name);
+};
+
 const swapLevel1 = (state, dispatch) => {
   if (state.goShift) {
     if (state.isWaiting) dispatch(setWait(false));
@@ -174,8 +183,30 @@ const noHandler = (state, dispatch) => {
 
 const flipDownAfterSomeTurns = (state, dispatch) => {
   // flipdown after some turn
-  if (state.moveCount % state.gameLevel.turnForFlipdown === 0) {
-    dispatch(setDirection(getOppositeDirection()));
+  if (state.gameLevel.turnForFlipDownCount <= 0) {
+    const matchedPieces = findMatchedPieces(state);
+    const firstPiece = matchedPieces[0];
+    const secondPiece = findOtherPairMember(matchedPieces, firstPiece);
+    firstPiece.matched = false;
+    secondPiece.matched = false;
+    flipCard(firstPiece, state, updateCards, dispatch);
+    flipCard(secondPiece, state, updateCards, dispatch);
+  }
+};
+
+const resetTurnForFlipDownCount = (state, dispatch, prevMatchCount) => {
+  if (
+    state.gameLevel.turnForFlipDown > 0 &&
+    prevMatchCount !== state.matchCount
+  ) {
+    dispatch(setTurnForFlipDownCount(state.gameLevel.turnForFlipDown));
+  }
+};
+
+const reduceTurnForFlipDownCount = (state, dispatch) => {
+  console.log(state.gameLevel.turnForFlipDownCount);
+  if (state.gameLevel.turnForFlipDownCount >= 2) {
+    dispatch(setTurnForFlipDownCount(state.gameLevel.turnForFlipDownCount - 2));
   }
 };
 
@@ -187,7 +218,7 @@ const changeDirectionAfterSomeTurns = (state, dispatch) => {
 
 const after2FlipsHandler = {
   noHandler,
-  flipDownAfterSomeTurns,
+  reduceTurnForFlipDownCount,
 };
 
 const sendShiftSignal = (state, dispatch, piece) => {
@@ -235,6 +266,7 @@ const CardGridService = {
   getLevel,
   getOppositeDirection,
   getRandomTurns,
+  resetTurnForFlipDownCount,
 };
 
 export default CardGridService;

@@ -104,6 +104,15 @@ const cardReducer = (state, action) => {
         },
       };
     }
+    case type.SET_TURN_FOR_FLIP_DOWN_COUNT: {
+      return {
+        ...state,
+        gameLevel: {
+          ...state.gameLevel,
+          turnForFlipDownCount: action.payload.count,
+        },
+      };
+    }
     default:
       throw new Error('invalid action');
   }

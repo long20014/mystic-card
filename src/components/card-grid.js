@@ -39,9 +39,9 @@ export default function CardGrid() {
       <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{gamelevelLabel}</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.moveCount]}>
+      {/* <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{moveCount.count}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {/* <TouchableOpacity style={[styles.moveCount]}>
         <Text style={[styles.textStyle]}>{matchCount}</Text>
       </TouchableOpacity> */}

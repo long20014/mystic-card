@@ -196,6 +196,7 @@ export const useCardGrid = () => {
         dispatch(updateCards(state.cardArr));
         dispatch(increaseMatchCount());
       }
+      state.gameLevel.handleAfter2flips(state, dispatch);
     }
   }, [state.moveCount]);
 

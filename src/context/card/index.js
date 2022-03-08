@@ -16,8 +16,8 @@ export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
   const turnForRedirection = useMemo(() => getRandomTurns(3, 5), []);
-  const currentLevel = levels[0];
-  const currentStage = currentLevel.stages[2];
+  const currentLevel = levels[1];
+  const currentStage = currentLevel.stages[1];
   const initialState = {
     cardArr: cardArr,
     arraySize: 4,
@@ -30,7 +30,8 @@ export const CardStateProvider = ({ children }) => {
     isWaiting: false,
     gameLevel: {
       timeRemain: currentStage.timeLimit,
-      turnForFlipdown: currentLevel.turnForFlipdown,
+      turnForFlipDown: currentLevel.turnForFlipDown,
+      turnForFlipDownCount: currentLevel.turnForFlipDown,
       turnForRedirection,
       levelNumber: currentLevel.levelNumber,
       stages: currentLevel.stages,

@@ -106,3 +106,12 @@ export const saveScore = (stageName, star, bestTime) => {
     },
   };
 };
+
+export const setTurnForFlipDownCount = (count) => {
+  return {
+    type: type.SET_TURN_FOR_FLIP_DOWN_COUNT,
+    payload: {
+      count,
+    },
+  };
+};

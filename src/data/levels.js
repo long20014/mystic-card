@@ -5,7 +5,7 @@ const { swapMechanic, after2FlipsHandler, shiftSignalController } =
 
 const level1 = {
   levelNumber: 1,
-  turnForFlipdown: 0,
+  turnForFlipDown: 0,
   swapMechanic: swapMechanic.swapLevel1,
   after2FlipsHandler: after2FlipsHandler.noHandler,
   shiftSignalController: shiftSignalController.shiftLevel1,
@@ -43,7 +43,7 @@ const level1 = {
 
 const level2 = {
   levelNumber: 2,
-  turnForFlipdown: 0,
+  turnForFlipDown: 0,
   swapMechanic: swapMechanic.swapLevel2,
   after2FlipsHandler: after2FlipsHandler.noHandler,
   shiftSignalController: shiftSignalController.shiftLevel2,
@@ -82,7 +82,7 @@ const level2 = {
 
 const level3 = {
   levelNumber: 3,
-  turnForFlipdown: 0,
+  turnForFlipDown: 0,
   swapMechanic: swapMechanic.swapLevel2,
   after2FlipsHandler: after2FlipsHandler.noHandler,
   shiftSignalController: shiftSignalController.shiftLevel3,
@@ -119,4 +119,43 @@ const level3 = {
   ],
 };
 
-export const levels = [level1, level2, level3];
+const level4 = {
+  levelNumber: 3,
+  turnForFlipDown: 12,
+  swapMechanic: swapMechanic.swapLevel2,
+  after2FlipsHandler: after2FlipsHandler.reduceTurnForFlipDownCount,
+  shiftSignalController: shiftSignalController.shiftLevel3,
+  hint: `Each 2 times you flip the card, the cards will shift
+  left or right 2 square, the shift direction remain through the stage`,
+  stages: [
+    {
+      stageNumber: 1,
+      timeLimit: 420, //second
+      _3starTimeRemain: 210, //second
+      _2starTimeRemain: 120,
+      reward: null,
+      description: `Finish this stage with remain time > 210s to earn 3 stars
+      Finish this stage with remain time > 120s to earn 2 stars`,
+    },
+    {
+      stageNumber: 2,
+      timeLimit: 360, //second
+      _3starTimeRemain: 180, //second
+      _2starTimeRemain: 120,
+      reward: null,
+      description: `Finish this stage with remain time > 180s to earn 3 stars
+      Finish this stage with remain time > 120s to earn 2 stars`,
+    },
+    {
+      stageNumber: 3,
+      timeLimit: 300, //second
+      _3starTimeRemain: 180, //second
+      _2starTimeRemain: 90,
+      reward: null,
+      description: `Finish this stage with remain time > 180s to earn 3 stars
+      Finish this stage with remain time > 90s to earn 2 stars`,
+    },
+  ],
+};
+
+export const levels = [level1, level2, level3, level4];

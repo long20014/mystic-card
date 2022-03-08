@@ -14,11 +14,11 @@ import { usePrevious } from 'hooks/usePrevious';
 
 const { UP, COMMON_TIMING } = constants;
 
-const { flipCard, getCardIndex } = CardGridService;
+const { flipCard, getCardIndex, resetTurnForFlipDownCount } = CardGridService;
 
 export const useCardPiece = (piece) => {
   const { state, dispatch } = useCardContext();
-  const previousMatchCount = usePrevious(state.matchCount, 0);
+  const previousMatchCount = usePrevious(state.matchCount);
   const index = getCardIndex(state.cardArr, piece);
   const getCardStatus = () => state.cardArr[index].status;
   const animatedValue = useRef(new Animated.Value(0));
@@ -79,6 +79,7 @@ export const useCardPiece = (piece) => {
       });
     }
     // console.log(state.matchCount);
+    resetTurnForFlipDownCount(state, dispatch, previousMatchCount);
     state.gameLevel.sendShiftSignal(state, dispatch, previousMatchCount, piece);
   };
 
