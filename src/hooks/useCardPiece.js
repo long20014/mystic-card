@@ -60,6 +60,16 @@ export const useCardPiece = (piece) => {
     }).start(() => callback());
   };
 
+  const sendShiftSignal = () => {
+    state.shiftSignalController.setProps(
+      state,
+      dispatch,
+      previousMatchCount,
+      piece
+    );
+    state.gameLevel.sendShiftSignal();
+  };
+
   const flipCardUp = (e) => {
     // console.log('flip up');
     if (state.isInit && piece.status === 'down' && !state.isWaiting) {
@@ -96,12 +106,7 @@ export const useCardPiece = (piece) => {
         ) {
           resetTurnForFlipDownCount(state, dispatch, previousMatchCount);
         }
-        state.gameLevel.sendShiftSignal(
-          state,
-          dispatch,
-          previousMatchCount,
-          piece
-        );
+        sendShiftSignal();
         if (isLastPiece(state, piece)) flipDownAfterSomeTurns(state, dispatch);
       }, COMMON_TIMING);
     }

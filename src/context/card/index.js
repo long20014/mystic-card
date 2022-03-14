@@ -4,7 +4,14 @@ import CardReducer from './reducer';
 import CardGridService from 'services/card-grid.service';
 import { levels } from 'data/levels';
 
-const { initCardArray, getDirection, getRandomTurns } = CardGridService;
+const {
+  initCardArray,
+  getDirection,
+  getRandomTurns,
+  shiftSignalController,
+  swapHandler,
+  after2FlipsHandler,
+} = CardGridService;
 
 export const useCardContext = () => {
   const { state, dispatch } = useContext(CardContext);
@@ -16,7 +23,7 @@ export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
   const turnForRedirection = useMemo(() => getRandomTurns(3, 5), []);
-  const currentLevel = levels[0];
+  const currentLevel = levels[3];
   const currentStage = currentLevel.stages[0];
   const initialState = {
     cardArr: cardArr,
@@ -28,6 +35,9 @@ export const CardStateProvider = ({ children }) => {
     matchCount: 0,
     isWinning: false,
     isWaiting: false,
+    shiftSignalController,
+    swapHandler,
+    after2FlipsHandler,
     gameLevel: {
       timeRemain: currentStage.timeLimit,
       turnForFlipDown: currentLevel.turnForFlipDown,
@@ -38,7 +48,7 @@ export const CardStateProvider = ({ children }) => {
       currentStage: currentStage,
       direction: direction,
       swap: currentLevel.swap,
-      handleAfter2flips: currentLevel.handleAfter2flips,
+      handleAfter2Flips: currentLevel.handleAfter2Flips,
       sendShiftSignal: currentLevel.sendShiftSignal,
     },
   };

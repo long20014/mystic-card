@@ -126,61 +126,6 @@ const findOtherPairMember = (pieces, piece) => {
   );
 };
 
-const swapLevel1 = (state, dispatch) => {
-  if (state.goShift) {
-    if (state.isWaiting) dispatch(setWait(false));
-  }
-  return;
-};
-
-const swapLevel2 = (state, dispatch) => {
-  if (state.goShift) {
-    setTimeout(() => {
-      const shiftedArray = shiftUnMatchedItemsOfArray(
-        state.cardArr,
-        2,
-        state.gameLevel.direction
-      );
-      console.log(shiftedArray);
-      dispatch(updateCards(shiftedArray));
-      if (state.isWaiting) dispatch(setWait(false));
-    }, COMMON_TIMING + 100);
-  }
-};
-
-const swapLevel3 = (state, dispatch) => {};
-
-const swapLevel4 = (state, dispatch) => {};
-
-const swapLevel5 = (state, dispatch) => {};
-
-const swapLevel6 = (state, dispatch) => {};
-
-const swapLevel7 = (state, dispatch) => {};
-
-const swapLevel8 = (state, dispatch) => {};
-
-const swapLevel9 = (state, dispatch) => {};
-
-const swapLevel10 = (state, dispatch) => {};
-
-const swapMechanic = {
-  swapLevel1,
-  swapLevel2,
-  swapLevel3,
-  swapLevel4,
-  swapLevel5,
-  swapLevel6,
-  swapLevel7,
-  swapLevel8,
-  swapLevel9,
-  swapLevel10,
-};
-
-const noHandler = (state, dispatch) => {
-  return;
-};
-
 const flipDownAfterSomeTurns = (state, dispatch) => {
   // flipdown after some turn
   if (
@@ -202,15 +147,10 @@ const flipDownAfterSomeTurns = (state, dispatch) => {
   }
 };
 
-const resetTurnForFlipDownCount = (state, dispatch) => {
-  dispatch(setTurnForFlipDownCount(state.gameLevel.turnForFlipDown));
-};
-
-const reduceTurnForFlipDownCount = (state, dispatch) => {
-  console.log(state.gameLevel.turnForFlipDownCount);
-  if (state.gameLevel.turnForFlipDownCount >= 2) {
-    dispatch(setTurnForFlipDownCount(state.gameLevel.turnForFlipDownCount - 2));
-  }
+const isLastPiece = (state, piece) => {
+  const index = state.cardArr.indexOf(piece);
+  const isLastPiece = index === state.cardArr.length - 1;
+  return isLastPiece;
 };
 
 const changeDirectionAfterSomeTurns = (state, dispatch) => {
@@ -219,44 +159,99 @@ const changeDirectionAfterSomeTurns = (state, dispatch) => {
   }
 };
 
-const after2FlipsHandler = {
-  noHandler,
-  reduceTurnForFlipDownCount,
+const resetTurnForFlipDownCount = (state, dispatch) => {
+  dispatch(setTurnForFlipDownCount(state.gameLevel.turnForFlipDown));
 };
 
-const isLastPiece = (state, piece) => {
-  const index = state.cardArr.indexOf(piece);
-  const isLastPiece = index === state.cardArr.length - 1;
-  return isLastPiece;
-};
+function SwapHandler() {
+  const self = this;
 
-const sendShiftSignal = (state, dispatch, piece) => {
-  if (!state.goShift && isLastPiece(state, piece)) {
-    dispatch(setGoShift(true));
-  }
-};
+  this.setProps = function (state, dispatch) {
+    this.state = state;
+    this.dispatch = dispatch;
+  };
 
-const shiftLevel1 = (state, dispatch, prevMatchCount, piece) => {
-  if (isEven(state.moveCount)) {
-    sendShiftSignal(state, dispatch, piece);
-  }
-};
+  this.swapLevel1 = () => {
+    if (self.state.goShift) {
+      if (self.state.isWaiting) self.dispatch(setWait(false));
+    }
+    return;
+  };
 
-const shiftLevel2 = (state, dispatch, prevMatchCount, piece) => {
-  if (prevMatchCount !== state.matchCount) {
-    sendShiftSignal(state, dispatch, piece);
-  }
-};
+  this.swapLevel2 = () => {
+    if (self.state.goShift) {
+      setTimeout(() => {
+        const shiftedArray = shiftUnMatchedItemsOfArray(
+          self.state.cardArr,
+          2,
+          self.state.gameLevel.direction
+        );
+        console.log(shiftedArray);
+        self.dispatch(updateCards(shiftedArray));
+        if (self.state.isWaiting) self.dispatch(setWait(false));
+      }, COMMON_TIMING + 100);
+    }
+  };
+}
 
-const shiftLevel3 = (state, dispatch, prevMatchCount, piece) => {
-  sendShiftSignal(state, dispatch, piece);
-};
+function After2FlipsHandler() {
+  const self = this;
 
-const shiftSignalController = {
-  shiftLevel1,
-  shiftLevel2,
-  shiftLevel3,
-};
+  this.setProps = function (state, dispatch) {
+    this.state = state;
+    this.dispatch = dispatch;
+  };
+
+  this.noHandler = () => {
+    return;
+  };
+
+  this.reduceTurnForFlipDownCount = () => {
+    console.log(self.state.gameLevel.turnForFlipDownCount);
+    if (self.state.gameLevel.turnForFlipDownCount >= 2) {
+      self.dispatch(
+        setTurnForFlipDownCount(self.state.gameLevel.turnForFlipDownCount - 2)
+      );
+    }
+  };
+}
+
+function ShiftSignalController() {
+  const self = this;
+
+  const sendShiftSignal = (state, dispatch, piece) => {
+    if (!state.goShift && isLastPiece(state, piece)) {
+      dispatch(setGoShift(true));
+    }
+  };
+
+  this.setProps = function (state, dispatch, previousMatchCount, piece) {
+    this.state = state;
+    this.dispatch = dispatch;
+    this.previousMatchCount = previousMatchCount;
+    this.piece = piece;
+  };
+
+  this.shiftLevel1 = () => {
+    if (isEven(self.state.moveCount)) {
+      sendShiftSignal(self.state, self.dispatch, self.piece);
+    }
+  };
+
+  this.shiftLevel2 = () => {
+    if (self.previousMatchCount !== self.state.matchCount) {
+      sendShiftSignal(self.state, self.dispatch, self.piece);
+    }
+  };
+
+  this.shiftLevel3 = () => {
+    sendShiftSignal(self.state, self.dispatch, self.piece);
+  };
+}
+
+const swapHandler = new SwapHandler();
+const after2FlipsHandler = new After2FlipsHandler();
+const shiftSignalController = new ShiftSignalController();
 
 const CardGridService = {
   getRandomPieceName,
@@ -266,7 +261,7 @@ const CardGridService = {
   flipCard,
   getCardIndex,
   findUnmatchedPieces,
-  swapMechanic,
+  swapHandler,
   after2FlipsHandler,
   shiftSignalController,
   setLevel,
@@ -276,6 +271,7 @@ const CardGridService = {
   resetTurnForFlipDownCount,
   flipDownAfterSomeTurns,
   isLastPiece,
+  changeDirectionAfterSomeTurns,
 };
 
 export default CardGridService;

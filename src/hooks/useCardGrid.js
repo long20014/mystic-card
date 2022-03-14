@@ -25,6 +25,16 @@ export const useCardGrid = () => {
   const [showRestartButton, setShowRestartButton] = useState(false);
   const [showNextStageButton, setShowNextStageButton] = useState(false);
 
+  const handleSwap = () => {
+    state.swapHandler.setProps(state, dispatch);
+    state.gameLevel.swap();
+  };
+
+  const handleAfter2Flips = () => {
+    state.after2FlipsHandler.setProps(state, dispatch);
+    state.gameLevel.handleAfter2Flips();
+  };
+
   const handleRestartGame = () => {
     dispatch(restartGame());
   };
@@ -44,7 +54,7 @@ export const useCardGrid = () => {
           currentStage: currentLevel.stages[stageNumber],
           direction: direction,
           swap: currentLevel.swap,
-          handleAfter2flips: currentLevel.handleAfter2flips,
+          handleAfter2Flips: currentLevel.handleAfter2Flips,
           sendShiftSignal: currentLevel.sendShiftSignal,
         },
         dispatch
@@ -57,7 +67,7 @@ export const useCardGrid = () => {
           currentStage: currentLevel.stages[0],
           direction: direction,
           swap: currentLevel.swap,
-          handleAfter2flips: currentLevel.handleAfter2flips,
+          handleAfter2Flips: currentLevel.handleAfter2Flips,
           sendShiftSignal: currentLevel.sendShiftSignal,
         },
         dispatch
@@ -196,13 +206,13 @@ export const useCardGrid = () => {
         dispatch(updateCards(state.cardArr));
         dispatch(increaseMatchCount());
       }
-      state.gameLevel.handleAfter2flips(state, dispatch);
+      handleAfter2Flips(state, dispatch);
     }
   }, [state.moveCount]);
 
   useEffect(() => {
     if (state.goShift) {
-      state.gameLevel.swap(state, dispatch);
+      handleSwap();
     }
   }, [state.goShift]);
 
