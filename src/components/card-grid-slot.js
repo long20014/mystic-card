@@ -12,12 +12,12 @@ export default function CardGridSlot({ id, piece }) {
   return createCardPiece();
 }
 
-const styles = StyleSheet.create({
-  cardGridSlot: {
-    position: 'relative',
-    backgroundColor: 'white',
-    width: 60,
-    height: 60,
-    margin: 5,
-  },
-});
+// const styles = StyleSheet.create({
+//   cardGridSlot: {
+//     position: 'relative',
+//     backgroundColor: 'white',
+//     width: 60,
+//     height: 60,
+//     margin: 5,
+//   },
+// });
