@@ -3,12 +3,12 @@ export function isEven(number) {
 }
 
 export function getRandomInt(max) {
-  const result = Math.floor(Math.random() * Math.floor(max)) + 1;
+  const result = Math.round(Math.random() * Math.floor(max));
   return result;
 }
 
 export function getRandomIntInRange(min, max) {
-  let result = Math.floor(Math.random() * Math.floor(max - min)) + min;
+  let result = Math.round(Math.random() * Math.floor(max - min)) + min;
   return result;
 }
 

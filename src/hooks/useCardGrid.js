@@ -16,8 +16,13 @@ import { levels } from 'data/levels';
 
 const { GRID_SIZE_LV2 } = constants;
 
-const { findUnmatchedPieces, setLevel, getLevel, getDirection } =
-  CardGridService;
+const {
+  findUnmatchedPieces,
+  setLevel,
+  getLevel,
+  getDirection,
+  changeDirectionAfterSomeTurns,
+} = CardGridService;
 
 export const useCardGrid = () => {
   const { state, dispatch } = useCardContext();
@@ -179,7 +184,7 @@ export const useCardGrid = () => {
     ) {
       const startCount = getStarCount(state.gameLevel.timeRemain);
       const startCountString = getStarCountString(startCount);
-      const stageName = `level-${state.gameLevel.levelNumber}_stage-${state.gameLevel.currentStage.stageNumber}`;
+      const stageName = getStageName(state);
       const bestTime = calculateBestTime(
         stageName,
         state,
@@ -207,6 +212,7 @@ export const useCardGrid = () => {
         dispatch(increaseMatchCount());
       }
       handleAfter2Flips(state, dispatch);
+      changeDirectionAfterSomeTurns(state, dispatch);
     }
   }, [state.moveCount]);
 

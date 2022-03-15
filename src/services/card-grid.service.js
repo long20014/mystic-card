@@ -23,12 +23,12 @@ const getDirection = () => {
   return randomInt === 1 ? LEFT : RIGHT;
 };
 
-const getRandomTurns = (min, max) => {
-  return getRandomIntInRange(min, max) * 2;
+const getRandomEvenTurns = (min, max) => {
+  return getRandomIntInRange(parseInt(min / 2), parseInt(max / 2)) * 2;
 };
 
 const getOppositeDirection = (direction) => {
-  return direction === LEFT ? RIGHT : LEfFT;
+  return direction === LEFT ? RIGHT : LEFT;
 };
 
 const getLevel = (state) => {
@@ -101,6 +101,10 @@ const initCardArray = () => {
   return cardArr;
 };
 
+const getStageName = (state) => {
+  return `level-${state.gameLevel.levelNumber}_stage-${state.gameLevel.currentStage.stageNumber}`;
+};
+
 const getCardIndex = (cardArr, piece) => {
   return cardArr.map((item) => item.id).indexOf(piece.id);
 };
@@ -154,8 +158,12 @@ const isLastPiece = (state, piece) => {
 };
 
 const changeDirectionAfterSomeTurns = (state, dispatch) => {
-  if (state.moveCount % state.gameLevel.turnForRedirection === 0) {
-    dispatch(setDirection(getOppositeDirection()));
+  if (
+    state.gameLevel.turnForRedirection > 0 &&
+    state.moveCount % state.gameLevel.turnForRedirection === 0
+  ) {
+    console.log('redirect');
+    dispatch(setDirection(getOppositeDirection(state.gameLevel.direction)));
   }
 };
 
@@ -266,8 +274,9 @@ const CardGridService = {
   shiftSignalController,
   setLevel,
   getLevel,
+  getStageName,
   getOppositeDirection,
-  getRandomTurns,
+  getRandomEvenTurns,
   resetTurnForFlipDownCount,
   flipDownAfterSomeTurns,
   isLastPiece,

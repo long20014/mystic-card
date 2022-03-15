@@ -7,7 +7,6 @@ import { levels } from 'data/levels';
 const {
   initCardArray,
   getDirection,
-  getRandomTurns,
   shiftSignalController,
   swapHandler,
   after2FlipsHandler,
@@ -22,8 +21,7 @@ export const useCardContext = () => {
 export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
-  const turnForRedirection = useMemo(() => getRandomTurns(3, 5), []);
-  const currentLevel = levels[3];
+  const currentLevel = levels[4];
   const currentStage = currentLevel.stages[0];
   const initialState = {
     cardArr: cardArr,
@@ -42,7 +40,7 @@ export const CardStateProvider = ({ children }) => {
       timeRemain: currentStage.timeLimit,
       turnForFlipDown: currentLevel.turnForFlipDown,
       turnForFlipDownCount: currentLevel.turnForFlipDown,
-      turnForRedirection,
+      turnForRedirection: currentLevel.turnForRedirection,
       levelNumber: currentLevel.levelNumber,
       stages: currentLevel.stages,
       currentStage: currentStage,
