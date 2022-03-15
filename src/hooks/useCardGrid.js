@@ -13,6 +13,7 @@ import {
 import { isEven, square } from 'utils/index';
 import constants from 'utils/constants';
 import { levels } from 'data/levels';
+import { Share, Alert } from 'react-native';
 
 const { GRID_SIZE_LV2 } = constants;
 
@@ -22,6 +23,7 @@ const {
   getLevel,
   getDirection,
   changeDirectionAfterSomeTurns,
+  getStageName,
 } = CardGridService;
 
 export const useCardGrid = () => {
@@ -29,6 +31,26 @@ export const useCardGrid = () => {
 
   const [showRestartButton, setShowRestartButton] = useState(false);
   const [showNextStageButton, setShowNextStageButton] = useState(false);
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'React Native | A framework for building native apps using React',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const handleSwap = () => {
     state.swapHandler.setProps(state, dispatch);
@@ -164,9 +186,6 @@ export const useCardGrid = () => {
   }, [state.matchCount]);
 
   useEffect(() => {
-    // if (state.isWinning) {
-    //   setTimeout(() => alert('You win the game'), 500);
-    // }
     setShowRestartButton(state.isWinning);
     setShowNextStageButton(state.isWinning);
   }, [state.isWinning]);
@@ -191,7 +210,20 @@ export const useCardGrid = () => {
         state.gameLevel.timeRemain
       );
       dispatch(saveScore(stageName, startCount, bestTime));
-      setTimeout(() => alert(`You got ${startCountString}`), 500);
+      setTimeout(() => {
+        // Only displayed on mobile
+        Alert.alert(
+          'Congratulation',
+          `You win!!! You got ${startCountString}`,
+          [
+            {
+              text: 'Share',
+              onPress: () => onShare(),
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ]
+        );
+      }, 500);
     }
   }, [state.gameLevel.timeRemain]);
 
@@ -252,5 +284,7 @@ export const useCardGrid = () => {
     showNextStageButton,
     handleStartGame,
     getIsInit,
+    state,
+    onShare,
   };
 };

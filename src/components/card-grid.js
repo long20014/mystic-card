@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useCardGrid } from 'hooks/useCardGrid';
 import Timer from 'components/timer';
+import Popup from 'components/popup';
 
 export default function CardGrid() {
   const {
@@ -23,6 +24,8 @@ export default function CardGrid() {
     getMatchCount,
     handleStartGame,
     getIsInit,
+    onShare,
+    state,
   } = useCardGrid();
   const hiddenStyle = showRestartButton ? '' : styles.hidden;
   const hiddenStyle2 = showRestartButton || getIsInit() ? styles.hidden : '';
@@ -77,6 +80,12 @@ export default function CardGrid() {
       >
         <Text style={[styles.textStyle]}>Start Gane</Text>
       </TouchableOpacity>
+      {/* <Popup
+        message={'you win'}
+        yesFunction={onShare}
+        yesText={'Share'}
+        isOpen={state.isWinning}
+      /> */}
     </SafeAreaView>
   );
 }
