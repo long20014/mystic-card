@@ -10,10 +10,18 @@ import {
   restartGame,
   saveScore,
 } from 'context/card/index';
-import { isEven, square } from 'utils/index';
+import {
+  isEven,
+  square,
+  getObjectLastProperty,
+  getObjKeyIndex,
+  getObjPropertiesFromIndex,
+  isLastKey,
+} from 'utils/index';
 import constants from 'utils/constants';
 import { levels } from 'data/levels';
 import { Share, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { GRID_SIZE_LV2 } = constants;
 
@@ -24,7 +32,18 @@ const {
   getDirection,
   changeDirectionAfterSomeTurns,
   getStageName,
+  getCurrentLevelNumber,
+  getCurrentStageNumber,
 } = CardGridService;
+
+const storeScore = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('scoreBoard', jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
 
 export const useCardGrid = () => {
   const { state, dispatch } = useCardContext();
@@ -86,8 +105,12 @@ export const useCardGrid = () => {
         },
         dispatch
       );
-    } else if (currentLevel.levelNumber < levels.length) {
-      currentLevel = levels[currentLevel.levelNumber];
+    } else if (!isLastKey(levels, `level${currentLevel.levelNumber}`)) {
+      const currentLevelIndex = getObjKeyIndex(
+        levels,
+        `level${currentLevel.levelNumber}`
+      );
+      currentLevel = getObjPropertiesFromIndex(levels, currentLevelIndex + 1);
       setLevel(
         {
           ...currentLevel,
@@ -166,7 +189,7 @@ export const useCardGrid = () => {
       const bestTime =
         state.scoreBoard[stageName].bestTime < timeRemain
           ? timeRemain
-          : tate.scoreBoard[stageName].bestTime;
+          : state.scoreBoard[stageName].bestTime;
       return bestTime;
     }
     return timeRemain;
@@ -176,8 +199,13 @@ export const useCardGrid = () => {
     if (state.isInit) {
       // console.log('rerendered card grid');
       // console.log(state.cardArr);
+      console.log(levels);
     }
-  });
+  }, []);
+
+  useEffect(() => {
+    storeScore(state.scoreBoard);
+  }, [state.scoreBoard]);
 
   useEffect(() => {
     if (state.matchCount === square(state.arraySize) / 2) {
@@ -204,12 +232,22 @@ export const useCardGrid = () => {
       const startCount = getStarCount(state.gameLevel.timeRemain);
       const startCountString = getStarCountString(startCount);
       const stageName = getStageName(state);
+      const currentLevelNumber = getCurrentLevelNumber(state);
+      const currentStageNumber = getCurrentStageNumber(state);
       const bestTime = calculateBestTime(
         stageName,
         state,
         state.gameLevel.timeRemain
       );
-      dispatch(saveScore(stageName, startCount, bestTime));
+      dispatch(
+        saveScore(
+          currentLevelNumber,
+          currentStageNumber,
+          stageName,
+          startCount,
+          bestTime
+        )
+      );
       setTimeout(() => {
         // Only displayed on mobile
         Alert.alert(

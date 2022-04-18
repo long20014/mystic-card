@@ -102,7 +102,17 @@ const initCardArray = () => {
 };
 
 const getStageName = (state) => {
-  return `level-${state.gameLevel.levelNumber}_stage-${state.gameLevel.currentStage.stageNumber}`;
+  return `level-${getCurrentLevelNumber(state)}_stage-${getCurrentStageNumber(
+    state
+  )}`;
+};
+
+const getCurrentLevelNumber = (state) => {
+  return state.gameLevel.levelNumber;
+};
+
+const getCurrentStageNumber = (state) => {
+  return state.gameLevel.currentStage.stageNumber;
 };
 
 const getCardIndex = (cardArr, piece) => {
@@ -275,6 +285,8 @@ const CardGridService = {
   setLevel,
   getLevel,
   getStageName,
+  getCurrentLevelNumber,
+  getCurrentStageNumber,
   getOppositeDirection,
   getRandomEvenTurns,
   resetTurnForFlipDownCount,

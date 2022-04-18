@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { StyleSheet, SafeAreaView, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useCardContext, setScoreBoard } from 'context/card/index';
 
 const menu = [
   {
@@ -17,7 +19,23 @@ const menu = [
   },
 ];
 
+const setScoreBoardFromStorage = async (dispatch) => {
+  try {
+    const value = await AsyncStorage.getItem('scoreBoard');
+    const jsonValue = value != null ? JSON.parse(value) : null;
+    setScoreBoard(dispatch(setScoreBoard(jsonValue)));
+  } catch (e) {
+    // error reading value
+  }
+};
+
 export default function CardMenu({ navigation }) {
+  const { dispatch } = useCardContext();
+
+  useEffect(() => {
+    setScoreBoardFromStorage(dispatch);
+  }, []);
+
   return (
     <View style={[styles.menu]}>
       {menu.map((item, index) => (

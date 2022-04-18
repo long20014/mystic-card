@@ -210,4 +210,4 @@ const level10 = {
   ],
 };
 
-export const levels = [level1, level2, level3, level9, level10];
+export const levels = { level1, level2, level3, level9, level10 };

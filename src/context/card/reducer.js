@@ -83,6 +83,12 @@ const cardReducer = (state, action) => {
         },
       };
     }
+    case type.SET_SCORE_BOARD: {
+      return {
+        ...state,
+        scoreBoard: { ...action.payload.scoreBoard },
+      };
+    }
     case type.SET_TIME_REMAIN: {
       return {
         ...state,
@@ -98,6 +104,9 @@ const cardReducer = (state, action) => {
         scoreBoard: {
           ...state.scoreBoard,
           [action.payload.stageName]: {
+            stageName: action.payload.stageName,
+            levelNumber: action.payload.levelNumber,
+            stageNumber: action.payload.stageNumber,
             star: action.payload.star,
             bestTime: action.payload.bestTime,
           },

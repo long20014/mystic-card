@@ -21,8 +21,8 @@ export const useCardContext = () => {
 export const CardStateProvider = ({ children }) => {
   const cardArr = useMemo(() => initCardArray(), []);
   const direction = useMemo(() => getDirection(), []);
-  const currentLevel = levels[4];
-  const currentStage = currentLevel.stages[0];
+  const currentLevel = levels['level3'];
+  const currentStage = currentLevel.stages[2];
   const initialState = {
     cardArr: cardArr,
     arraySize: 4,

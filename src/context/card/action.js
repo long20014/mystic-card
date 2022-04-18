@@ -96,10 +96,27 @@ export const setRemainTime = (timeRemain) => {
   };
 };
 
-export const saveScore = (stageName, star, bestTime) => {
+export const setScoreBoard = (scoreBoard) => {
+  return {
+    type: type.SET_SCORE_BOARD,
+    payload: {
+      scoreBoard,
+    },
+  };
+};
+
+export const saveScore = (
+  levelNumber,
+  stageNumber,
+  stageName,
+  star,
+  bestTime
+) => {
   return {
     type: type.SAVE_SCORE,
     payload: {
+      levelNumber,
+      stageNumber,
       stageName,
       star,
       bestTime,
