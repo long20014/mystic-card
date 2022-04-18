@@ -92,8 +92,21 @@ export const useCardGrid = () => {
   const handleNextStage = () => {
     let currentLevel = getLevel(state);
     const direction = getDirection();
-    const stageNumber = currentLevel.currentStage.stageNumber;
-    if (stageNumber < currentLevel.stages.length) {
+    function getLevelIndex(levelNumber) {
+      const targetLevel = levels.find(
+        (level) => level.levelNumber === levelNumber
+      );
+      if (targetLevel) {
+        const result = levels.indexOf(targetLevel);
+        return result;
+      }
+      throw new Error('target level not found');
+    }
+    function isLastLevel(index) {
+      return index === levels.length - 1;
+    }
+    const currentlevelIndex = getLevelIndex(levelNumber);
+    if (currentLevel.currentStage.stageNumber < currentLevel.stages.length) {
       setLevel(
         {
           ...currentLevel,
@@ -105,12 +118,8 @@ export const useCardGrid = () => {
         },
         dispatch
       );
-    } else if (!isLastKey(levels, `level${currentLevel.levelNumber}`)) {
-      const currentLevelIndex = getObjKeyIndex(
-        levels,
-        `level${currentLevel.levelNumber}`
-      );
-      currentLevel = getObjPropertiesFromIndex(levels, currentLevelIndex + 1);
+    } else if (!isLastLevel(currentlevelIndex)) {
+      currentLevel = levels[currentlevelIndex + 1];
       setLevel(
         {
           ...currentLevel,
