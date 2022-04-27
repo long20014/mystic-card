@@ -10,14 +10,7 @@ import {
   restartGame,
   saveScore,
 } from 'context/card/index';
-import {
-  isEven,
-  square,
-  getObjectLastProperty,
-  getObjKeyIndex,
-  getObjPropertiesFromIndex,
-  isLastKey,
-} from 'utils/index';
+import { isEven, square } from 'utils/index';
 import constants from 'utils/constants';
 import { levels } from 'data/levels';
 import { Share, Alert } from 'react-native';
