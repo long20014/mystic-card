@@ -5,28 +5,28 @@ import { useCardSetting } from 'hooks/useCardSetting';
 import constants from 'utils/constants';
 
 const { NORMAL, HARD, NIGHTMARE } = constants;
-const levels = [NORMAL, HARD, NIGHTMARE];
+// const levels = [NORMAL, HARD, NIGHTMARE];
 
 export default function CardSetting({ navigation }) {
-  const { state, changeGameLevel } = useCardSetting();
+  const { state, changeGameLevel, availableLevels } = useCardSetting();
   return (
     <View style={[styles.menu]}>
       <SelectDropdown
-        data={levels}
+        data={availableLevels}
         onSelect={(selectedItem, index) => {
           changeGameLevel(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           // text represented after item is selected
           // if data array is an array of objects then return selectedItem.property to render after item is selected
-          return selectedItem;
+          return selectedItem.stageName;
         }}
         rowTextForSelection={(item, index) => {
           // text represented for each item in dropdown
           // if data array is an array of objects then return item.property to represent item in dropdown
-          return item;
+          return item.stageName;
         }}
-        defaultValue={state.gameLevel.level}
+        defaultValue={availableLevels[0]}
       />
       <Text
         onPress={() => navigation.navigate('Menu')}

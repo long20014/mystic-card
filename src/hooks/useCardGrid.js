@@ -38,7 +38,7 @@ const storeScore = async (value) => {
   }
 };
 
-export const useCardGrid = () => {
+export const useCardGrid = (navigation) => {
   const { state, dispatch } = useCardContext();
 
   const [showRestartButton, setShowRestartButton] = useState(false);
@@ -136,6 +136,11 @@ export const useCardGrid = () => {
       console.log(calculateTotalStar() + ' stars');
       dispatch(initGame(true));
     }
+  };
+
+  const handleBackToMenu = () => {
+    handleRestartGame();
+    setTimeout(() => navigation.navigate('Menu'), 0);
   };
 
   const testWinGame = () => {
@@ -326,5 +331,6 @@ export const useCardGrid = () => {
     getIsInit,
     state,
     onShare,
+    handleBackToMenu,
   };
 };

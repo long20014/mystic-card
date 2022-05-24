@@ -25,8 +25,8 @@ const {
 export const useCardPiece = (piece) => {
   const { state, dispatch } = useCardContext();
   const previousMatchCount = usePrevious(state.matchCount);
-  const index = getCardIndex(state.cardArr, piece);
-  const getCardStatus = () => state.cardArr[index].status;
+  const cardIndex = getCardIndex(state.cardArr, piece);
+  const getCardStatus = () => state.cardArr[cardIndex].status;
   const animatedValue = useRef(new Animated.Value(0));
   const frontInterpolate = animatedValue.current.interpolate({
     inputRange: [0, 180],

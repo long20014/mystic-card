@@ -10,7 +10,7 @@ import { useCardGrid } from 'hooks/useCardGrid';
 import Timer from 'components/timer';
 import Popup from 'components/popup';
 
-export default function CardGrid() {
+export default function CardGrid({ navigation }) {
   const {
     testWinGame,
     handleRestartGame,
@@ -25,8 +25,9 @@ export default function CardGrid() {
     handleStartGame,
     getIsInit,
     onShare,
+    handleBackToMenu,
     state,
-  } = useCardGrid();
+  } = useCardGrid(navigation);
   const hiddenStyle = showRestartButton ? '' : styles.hidden;
   const hiddenStyle2 = showRestartButton || getIsInit() ? styles.hidden : '';
   const hiddenStyle3 = showRestartButton || !getIsInit() ? styles.hidden : '';
@@ -79,6 +80,12 @@ export default function CardGrid() {
         onPress={handleStartGame}
       >
         <Text style={[styles.textStyle]}>Start Gane</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[hiddenStyle3, styles.buttonStyle]}
+        onPress={handleBackToMenu}
+      >
+        <Text style={[styles.textStyle]}>Back To Menu</Text>
       </TouchableOpacity>
       {/* <Popup
         message={'you win'}

@@ -13,7 +13,7 @@ const level1 = {
   turnForRedirection: 0,
   swap: swapHandler.swapLevel1,
   handleAfter2Flips: after2FlipsHandler.noHandler,
-  sendShiftSignal: shiftSignalController.shiftLevel1,
+  sendShiftSignal: shiftSignalController.afterFlipShift,
   hint: `Nothing special`,
   stages: [
     {
@@ -52,7 +52,7 @@ const level2 = {
   turnForRedirection: 0,
   swap: swapHandler.swapLevel2,
   handleAfter2Flips: after2FlipsHandler.noHandler,
-  sendShiftSignal: shiftSignalController.shiftLevel2,
+  sendShiftSignal: shiftSignalController.afterMatchShift,
   hint: `Each times you found a matched pair, the cards will shift
   left or right 2 square, the shift direction remain through the stage`,
   stages: [
@@ -92,7 +92,47 @@ const level3 = {
   turnForRedirection: 0,
   swap: swapHandler.swapLevel2,
   handleAfter2Flips: after2FlipsHandler.noHandler,
-  sendShiftSignal: shiftSignalController.shiftLevel3,
+  sendShiftSignal: shiftSignalController.afterFlipShift,
+  hint: `Each 2 times you flip the card, the cards will shift
+  left or right 2 square, the shift direction remain through the stage`,
+  stages: [
+    {
+      stageNumber: 1,
+      timeLimit: 420, //second
+      _3starTimeRemain: 210, //second
+      _2starTimeRemain: 120,
+      reward: null,
+      description: `Finish this stage with remain time > 210s to earn 3 stars
+      Finish this stage with remain time > 120s to earn 2 stars`,
+    },
+    {
+      stageNumber: 2,
+      timeLimit: 360, //second
+      _3starTimeRemain: 180, //second
+      _2starTimeRemain: 120,
+      reward: null,
+      description: `Finish this stage with remain time > 180s to earn 3 stars
+      Finish this stage with remain time > 120s to earn 2 stars`,
+    },
+    {
+      stageNumber: 3,
+      timeLimit: 300, //second
+      _3starTimeRemain: 180, //second
+      _2starTimeRemain: 90,
+      reward: null,
+      description: `Finish this stage with remain time > 180s to earn 3 stars
+      Finish this stage with remain time > 90s to earn 2 stars`,
+    },
+  ],
+};
+
+const level4 = {
+  levelNumber: 4,
+  turnForFlipDown: 0,
+  turnForRedirection: getRandomEvenTurns(8, 12),
+  swap: swapHandler.swapLevel2,
+  handleAfter2Flips: after2FlipsHandler.noHandler,
+  sendShiftSignal: shiftSignalController.afterFlipShift,
   hint: `Each 2 times you flip the card, the cards will shift
   left or right 2 square, the shift direction remain through the stage`,
   stages: [
@@ -132,7 +172,7 @@ const level9 = {
   turnForRedirection: 0,
   swap: swapHandler.swapLevel2,
   handleAfter2Flips: after2FlipsHandler.reduceTurnForFlipDownCount,
-  sendShiftSignal: shiftSignalController.shiftLevel3,
+  sendShiftSignal: shiftSignalController.afterFlipShift,
   hint: `Each 2 times you flip the card, the cards will shift
   left or right 2 square, the shift direction remain unchanged 
   throughout the stage. After 10 consecutive incorrect flip, 
@@ -174,7 +214,7 @@ const level10 = {
   turnForRedirection: getRandomEvenTurns(8, 12),
   swap: swapHandler.swapLevel2,
   handleAfter2Flips: after2FlipsHandler.reduceTurnForFlipDownCount,
-  sendShiftSignal: shiftSignalController.shiftLevel3,
+  sendShiftSignal: shiftSignalController.afterFlipShift,
   hint: `Each 2 times you flip the card, the cards will shift
   left or right 2 square. The shift direction will change after some 
   turns during the stage. After 6 consecutive incorrect flip, 
@@ -210,4 +250,4 @@ const level10 = {
   ],
 };
 
-export const levels = [level1, level2, level3, level9, level10];
+export const levels = [level1, level2, level3, level4, level9, level10];

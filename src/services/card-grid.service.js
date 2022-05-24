@@ -162,9 +162,13 @@ const flipDownAfterSomeTurns = (state, dispatch) => {
 };
 
 const isLastPiece = (state, piece) => {
-  const index = state.cardArr.indexOf(piece);
-  const isLastPiece = index === state.cardArr.length - 1;
-  return isLastPiece;
+  let targetPiece = piece;
+  if (piece.status === 'up') {
+    targetPiece = state.cardArr.find((card) => card.id === piece.id);
+  }
+  const index = state.cardArr.indexOf(targetPiece);
+  const result = index === state.cardArr.length - 1;
+  return result;
 };
 
 const changeDirectionAfterSomeTurns = (state, dispatch) => {
@@ -250,19 +254,13 @@ function ShiftSignalController() {
     this.piece = piece;
   };
 
-  this.shiftLevel1 = () => {
-    if (isEven(self.state.moveCount)) {
-      sendShiftSignal(self.state, self.dispatch, self.piece);
-    }
-  };
-
-  this.shiftLevel2 = () => {
+  this.afterMatchShift = () => {
     if (self.previousMatchCount !== self.state.matchCount) {
       sendShiftSignal(self.state, self.dispatch, self.piece);
     }
   };
 
-  this.shiftLevel3 = () => {
+  this.afterFlipShift = () => {
     sendShiftSignal(self.state, self.dispatch, self.piece);
   };
 }
