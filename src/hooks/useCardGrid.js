@@ -223,7 +223,7 @@ export const useCardGrid = (navigation) => {
   useEffect(() => {
     setShowRestartButton(state.isWinning);
     setShowNextStageButton(state.isWinning);
-  }, [state.isWinning]);
+  }, [state.isWinning, state.isInit]);
 
   useEffect(() => {
     if (state.gameLevel.timeRemain <= 0) {

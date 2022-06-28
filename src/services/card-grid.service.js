@@ -8,9 +8,9 @@ import {
   setDirection,
   setTurnForFlipDownCount,
 } from 'context/card/index';
-import { getRandomInt, getRandomIntInRange, isEven } from 'utils/index';
+import { getRandomInt, getRandomIntInRange } from 'utils/index';
 
-const { LEFT, RIGHT, UP, DOWN, COMMON_TIMING } = constants;
+const { LEFT, RIGHT, DOWN, COMMON_TIMING } = constants;
 
 const getRandomPieceName = (pieceNames) => {
   const splicePos = Math.floor((Math.random() * 100) % pieceNames.length);
@@ -163,7 +163,8 @@ const flipDownAfterSomeTurns = (state, dispatch) => {
 
 const isLastPiece = (state, piece) => {
   let targetPiece = piece;
-  if (piece.status === 'up') {
+  // only performing find if 2 last cards are flipped up.
+  if (piece.status === 'up' && !piece.matched) {
     targetPiece = state.cardArr.find((card) => card.id === piece.id);
   }
   const index = state.cardArr.indexOf(targetPiece);

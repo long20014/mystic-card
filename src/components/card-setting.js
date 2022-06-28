@@ -2,13 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useCardSetting } from 'hooks/useCardSetting';
-import constants from 'utils/constants';
-
-const { NORMAL, HARD, NIGHTMARE } = constants;
-// const levels = [NORMAL, HARD, NIGHTMARE];
 
 export default function CardSetting({ navigation }) {
-  const { state, changeGameLevel, availableLevels } = useCardSetting();
+  const { changeGameLevel, availableLevels } = useCardSetting();
   return (
     <View style={[styles.menu]}>
       <SelectDropdown
