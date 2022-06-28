@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Audio } from 'expo-av';
 import {
   useCardContext,
   updateCards,
@@ -24,6 +25,7 @@ const {
 
 export const useCardPiece = (piece) => {
   const { state, dispatch } = useCardContext();
+  const [sound, setSound] = useState();
   const previousMatchCount = usePrevious(state.matchCount);
   const cardIndex = getCardIndex(state.cardArr, piece);
   const getCardStatus = () => state.cardArr[cardIndex].status;
@@ -75,6 +77,7 @@ export const useCardPiece = (piece) => {
     if (state.isInit && piece.status === 'down' && !state.isWaiting) {
       flipCard(piece, state, updateCards, dispatch, UP);
       dispatch(increaseMoveCount());
+      playSound();
       startFlipAnimation(180, COMMON_TIMING, 0, () => {});
       if (isEven(state.moveCount + 1) && !state.isWaiting) {
         dispatch(setWait(true));
@@ -93,6 +96,26 @@ export const useCardPiece = (piece) => {
       }
     });
   };
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+      require('../../assets/mp3/Card-flip-sound-effect.mp3')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   useEffect(() => {
     if (isEven(state.moveCount)) {
