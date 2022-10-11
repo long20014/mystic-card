@@ -98,12 +98,13 @@ export const useCardGrid = (navigation) => {
     function isLastLevel(index) {
       return index === levels.length - 1;
     }
-    const currentlevelIndex = getLevelIndex(levelNumber);
+    const currentlevelIndex = getLevelIndex(currentLevel.levelNumber);
     if (currentLevel.currentStage.stageNumber < currentLevel.stages.length) {
       setLevel(
         {
           ...currentLevel,
-          currentStage: currentLevel.stages[stageNumber],
+          currentStage:
+            currentLevel.stages[currentLevel.currentStage.stageNumber],
           direction: direction,
           swap: currentLevel.swap,
           handleAfter2Flips: currentLevel.handleAfter2Flips,

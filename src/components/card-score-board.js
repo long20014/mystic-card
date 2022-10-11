@@ -28,9 +28,9 @@ export default function CardScoreBoard({ navigation }) {
       <Text style={[styles.menuItem]}>Score Board</Text>
       {scoreBoard &&
         Object.entries(scoreBoard).map(([key, value], i) => (
-          <Text style={[styles.menuItem]}>
-            Stage: {value.stageNumber} | Level: {value.levelNumber} | Star:{' '}
-            {rating(value.star)} | Best time: {value.bestTime}
+          <Text key={key} style={[styles.menuItem]}>
+            Level: {value.levelNumber} | Stage: {value.stageNumber} | Star:{' '}
+            {rating(value.star)} | Best time: {value.bestTime}s
           </Text>
         ))}
       <Text

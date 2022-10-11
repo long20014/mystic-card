@@ -81,10 +81,7 @@ export default function CardGrid({ navigation }) {
       >
         <Text style={[styles.textStyle]}>Start Gane</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={[hiddenStyle3, styles.buttonStyle]}
-        onPress={handleBackToMenu}
-      >
+      <TouchableOpacity style={[styles.buttonStyle]} onPress={handleBackToMenu}>
         <Text style={[styles.textStyle]}>Back To Menu</Text>
       </TouchableOpacity>
       {/* <Popup

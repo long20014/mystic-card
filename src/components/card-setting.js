@@ -2,9 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useCardSetting } from 'hooks/useCardSetting';
+import CardGridService from 'services/card-grid.service';
+
+const { getStageName } = CardGridService;
 
 export default function CardSetting({ navigation }) {
-  const { changeGameLevel, availableLevels } = useCardSetting();
+  const { changeGameLevel, availableLevels, state } = useCardSetting();
+  const currentStageName = getStageName(state);
+  const currentLevels = availableLevels.find(
+    (level) => level.stageName === currentStageName
+  );
   return (
     <View style={[styles.menu]}>
       <SelectDropdown
@@ -22,7 +29,7 @@ export default function CardSetting({ navigation }) {
           // if data array is an array of objects then return item.property to represent item in dropdown
           return item.stageName;
         }}
-        defaultValue={availableLevels[0]}
+        defaultValue={currentLevels}
       />
       <Text
         onPress={() => navigation.navigate('Menu')}
