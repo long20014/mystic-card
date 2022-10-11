@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Audio } from 'expo-av';
 import {
   useCardContext,
@@ -77,7 +77,7 @@ export const useCardPiece = (piece) => {
     if (state.isInit && piece.status === 'down' && !state.isWaiting) {
       flipCard(piece, state, updateCards, dispatch, UP);
       dispatch(increaseMoveCount());
-      playSound();
+      playFlipSound();
       startFlipAnimation(180, COMMON_TIMING, 0, () => {});
       if (isEven(state.moveCount + 1) && !state.isWaiting) {
         dispatch(setWait(true));
@@ -97,7 +97,7 @@ export const useCardPiece = (piece) => {
     });
   };
 
-  async function playSound() {
+  async function playFlipSound() {
     console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync(
       require('../../assets/mp3/Card-flip-sound-effect.mp3')

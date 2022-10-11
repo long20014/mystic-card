@@ -11,7 +11,7 @@ const menu = [
   },
   {
     label: 'Score Board',
-    component: 'CardGrid',
+    component: 'ScoreBoard',
   },
   {
     label: 'Setting',
