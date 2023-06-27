@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const rating = (stars) => `★★★☆☆☆`.slice(3 - stars, 6 - stars);
+import { getRating } from 'utils/index';
 
 export default function CardScoreBoard({ navigation }) {
   const [scoreBoard, setScoreBoard] = useState(null);
@@ -30,7 +29,7 @@ export default function CardScoreBoard({ navigation }) {
         Object.entries(scoreBoard).map(([key, value], i) => (
           <Text key={key} style={[styles.menuItem]}>
             Level: {value.levelNumber} | Stage: {value.stageNumber} | Star:{' '}
-            {rating(value.star)} | Best time: {value.bestTime}s
+            {getRating(value.star)} | Best time: {value.bestTime}s
           </Text>
         ))}
       <Text

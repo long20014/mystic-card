@@ -10,7 +10,7 @@ import {
   restartGame,
   saveScore,
 } from 'context/card/index';
-import { isEven, square } from 'utils/index';
+import { isEven, square, getRating } from 'utils/index';
 import constants from 'utils/constants';
 import { levels } from 'data/levels';
 import { Share, Alert } from 'react-native';
@@ -178,10 +178,11 @@ export const useCardGrid = (navigation) => {
   };
 
   const getStarCountString = (starCount) => {
-    if (starCount > 1) {
-      return starCount + ' stars';
-    }
-    return starCount + ' star';
+    // if (starCount > 1) {
+    //   return starCount + ' stars';
+    // }
+    // return starCount + ' star';
+    return getRating(starCount);
   };
 
   const calculateTotalStar = () => {
@@ -237,8 +238,8 @@ export const useCardGrid = (navigation) => {
       state.gameLevel.timeRemain !== state.gameLevel.currentStage.timeLimit &&
       state.isWinning
     ) {
-      const startCount = getStarCount(state.gameLevel.timeRemain);
-      const startCountString = getStarCountString(startCount);
+      const starCount = getStarCount(state.gameLevel.timeRemain);
+      const starCountString = getStarCountString(starCount);
       const stageName = getStageName(state);
       const currentLevelNumber = getCurrentLevelNumber(state);
       const currentStageNumber = getCurrentStageNumber(state);
@@ -252,23 +253,19 @@ export const useCardGrid = (navigation) => {
           currentLevelNumber,
           currentStageNumber,
           stageName,
-          startCount,
+          starCount,
           bestTime
         )
       );
       setTimeout(() => {
         // Only displayed on mobile
-        Alert.alert(
-          'Congratulation',
-          `You win!!! You got ${startCountString}`,
-          [
-            {
-              text: 'Share',
-              onPress: () => onShare(),
-            },
-            { text: 'OK', onPress: () => console.log('OK Pressed') },
-          ]
-        );
+        Alert.alert('Congratulation', `You win!!! You got ${starCountString}`, [
+          {
+            text: 'Share',
+            onPress: () => onShare(),
+          },
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ]);
       }, 500);
     }
   }, [state.gameLevel.timeRemain]);

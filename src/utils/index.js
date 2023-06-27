@@ -45,3 +45,5 @@ export function isLastKey(obj, key) {
   const result = index === Object.keys(obj).length - 1;
   return result;
 }
+
+export const getRating = (stars) => `★★★☆☆☆`.slice(3 - stars, 6 - stars);
